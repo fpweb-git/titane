@@ -1,8 +1,10 @@
 {
   "name": "@titane/core",
   "version": "0.0.0",
-  "description": "Core engine",
-  "main": "index.ts",
+  "description": "Titane Core Engine",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "dev": "tsc -b -w",
     "build": "tsc -b",

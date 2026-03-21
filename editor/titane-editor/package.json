@@ -1,5 +1,5 @@
 {
-  "name": "titane-editor",
+  "name": "@titane/editor",
   "type": "module",
   "private": true,
   "scripts": {
