@@ -1,0 +1,23 @@
+{
+  "name": "@titane/core",
+  "version": "0.0.0",
+  "description": "Core engine",
+  "main": "index.ts",
+  "scripts": {
+    "dev": "tsc -b -w",
+    "build": "tsc -b",
+    "lint": "eslint ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+    "@dimforge/rapier3d": "^0.19.3",
+    "three": "^0.183.2"
+  },
+  "devDependencies": {
+    "@types/three": "^0.183.1",
+    "typescript": "^5.9.3"
+  }
+}

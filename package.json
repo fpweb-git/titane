@@ -1,0 +1,22 @@
+{
+  "name": "titane_engine",
+  "version": "0.0.0",
+  "description": "Typescript game engine",
+  "license": "MIT",
+  "type": "module",
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "editor/*"
+  ],
+  "scripts": {
+    "core:dev": "npm run dev -w @titane/core",
+    "editor:dev": "npm run dev -w @titane/editor"
+  },
+  "devDependencies": {
+    "@nuxt/eslint": "^1.15.2",
+    "@typescript-eslint/eslint-plugin": "^8.57.1",
+    "@typescript-eslint/parser": "^8.57.1",
+    "eslint": "^10.1.0"
+  }
+}
