@@ -3,7 +3,7 @@ import { Entity } from './types';
 import { createEntity } from './entity';
 import { addComponent } from './component';
 import { TRANSFORM_ID, createTransform } from './components/transform';
-import { MESH_ID, createMesh, PrimitiveType } from './components/mesh';
+import { MESH_ID, createMesh } from './components/mesh';
 
 /**
  * Helper functions to quickly spawn common entities.

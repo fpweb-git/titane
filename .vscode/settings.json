@@ -1,0 +1,13 @@
+{
+  "html.format.wrapAttributes": "preserve",
+  "volar.format.initialIndent": {
+    "html": true
+  },
+  "[vue]": {
+    "editor.defaultFormatter": "Vue.volar",
+    "editor.formatOnSave": true
+  },
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  }
+}

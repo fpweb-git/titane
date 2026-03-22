@@ -26,11 +26,15 @@ A data-oriented, ECS-based 3D game engine.
 - [x] Precise `Clock` for delta time management.
 - [x] `EntityFactory` to simplify entity spawning.
 - [x] Vue Viewport component with proper resize event management.
+- [x] `useTitane` Nuxt Composable for global engine access.
+- [x] Standardized `apps/editor` and `packages/core` communication.
+- [x] ESLint configuration for custom Vue props line breaking.
 
 ## ⏳ In Progress
-- [ ] Centralizing Engine access via Nuxt Composables.
+- [ ] Making the Hierarchy reactive to real-time ECS changes.
+- [ ] Implementing Entity Selection state.
 
 ## 📋 Next Tasks
-1. Create a `useTitane` composable in Nuxt to share the engine instance.
-2. Build a basic `Hierarchy.vue` component to list active entities.
-3. Implement `destroyEntity` logic in the `RenderSystem` (cleanup Three.js objects).
+1. Build a real `Hierarchy` component to list and select entities.
+2. Implement a `SelectionSystem` or a simple state to track the "Active Entity".
+3. Add a "Play/Pause" button in the Editor TopBar that calls `engine.start()` / `engine.stop()`
