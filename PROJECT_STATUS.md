@@ -18,19 +18,24 @@ A data-oriented, ECS-based 3D game engine.
 4. **Public API** must be used for all modifications (Internal Maps are private).
 
 ## 🎯 Current Milestone
-**Modular Editor & Logic Decoupling**
+**Editor Workspace Foundations & Runtime Control**
 
 ## ✅ Completed
-- [x] Full Functional ECS Core.
-- [x] RenderSystem with Cleanup phase.
-- [x] **Refactored Inspector logic into `useInspectorActions` composable.**
-- [x] Nuxt UI Integration for Hierarchy and Inspector.
+- [x] **Functional ECS Core**: Strict data/logic separation (Entity, Component, Query).
+- [x] **Advanced Runtime**: `TitaneEngine` with independent Logic and Render loops.
+- [x] **DeltaTime Management**: Precision `Clock` for frame-independent movement.
+- [x] **Modular UI Architecture**: Refactored Inspector, Hierarchy, and UI components.
+- [x] **Inspector Logic**: Encapsulated actions (Delete, Duplicate) in `useInspectorActions`.
+- [x] **Simulation Control**: Play/Pause/Step functionality via `useRuntime`.
+- [x] **Visual Aids**: Integrated `GridHelper` in the 3D viewport.
+- [x] **Memory Management**: Automatic GPU resource cleanup (`dispose`) in `RenderSystem`.
 
 ## ⏳ In Progress
-- [ ] Global Play/Pause simulation state.
-- [ ] Transform gizmos or simple click-to-select in viewport.
+- [ ] **Scene State Management**: Capturing the initial world state before "Play".
+- [ ] **Viewport Interaction**: Raycasting for clicking objects directly in 3D.
 
 ## 📋 Next Tasks
-1. Add a **Play/Pause** button in the TopBar (via a new `useRuntime` composable).
-2. Create a `MeshInspector` to change colors/shapes.
-3. Add a "Reset Scene" button in the hierarchy.
+1. **Entity Naming**: Add a `Name` component to replace "GameObject #ID" with custom names.
+2. **Scene Reset**: Implement a way to revert all entities to their "Pre-Play" positions.
+3. **Transform Gizmos**: Add visual axes (X, Y, Z) to the selected entity in the viewport.
+4. **Enhanced Factory**: Allow color and primitive selection (Sphere, Plane) in the UI.

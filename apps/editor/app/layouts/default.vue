@@ -11,17 +11,7 @@
         </UDashboardSidebar>
 
         <div class="flex flex-col">
-            <UDashboardNavbar>
-                <template #right>
-                    <UButton
-                        :icon="isPlaying ? 'i-lucide-pause' : 'i-lucide-play'"
-                        color="neutral"
-                        variant="ghost"
-                        size="sm"
-                        @click="togglePlay" />
-                </template>
-            </UDashboardNavbar>
-
+            <Topbar />
             <slot />
         </div>
         <UDashboardSidebar side="right" collapsible resizable class="border-l border-default">

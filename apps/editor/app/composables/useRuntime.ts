@@ -1,12 +1,13 @@
 import { ref } from 'vue';
 import { useTitane } from './useTitane';
 
-const isPlaying = ref(true);
+const isPlaying = ref<boolean>(true);
+const isGridVisible = ref<boolean>(true);
 
 /**
  * Controls the engine's execution state.
  */
-export function useRuntime() {
+export const useRuntime = () => {
     const { engine } = useTitane();
 
     /**
@@ -17,6 +18,16 @@ export function useRuntime() {
 
         isPlaying.value = !isPlaying.value;
         engine.value.isPaused = !isPlaying.value;
+    };
+
+    /**
+     * Toggles the visibility of the ground grid.
+     */
+    const toggleGrid = () => {
+        if (!engine.value) return;
+
+        isGridVisible.value = !isGridVisible.value;
+        engine.value.setGridVisible(isGridVisible.value);
     };
 
     /**
@@ -35,6 +46,8 @@ export function useRuntime() {
     return {
         isPlaying,
         togglePlay,
+        isGridVisible,
+        toggleGrid,
         stepFrame
     };
 }

@@ -9,13 +9,16 @@
                 :label="entities.size"
                 color="neutral"
                 variant="outline"
-                size="xs" />
+                size="sm" />
             <UButton
                 icon="i-lucide-plus"
                 color="neutral"
                 variant="ghost"
-                size="xs"
+                size="sm"
                 @click.stop="createNewEntity" />
+        </template>
+        <template #actions-trailing="{ item }">
+            <UiEntityActions />
         </template>
     </UNavigationMenu>
 </template>
@@ -52,6 +55,7 @@ const items = computed<NavigationMenuItem[]>(() => [
         children: Array.from(entities.value).map((id) => ({
             label: `GameObject #${id}`,
             icon: 'i-lucide-box',
+            slot: 'actions' as const,
             onSelect: () => selectEntity(id)
         }))
     }

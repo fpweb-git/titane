@@ -5,7 +5,7 @@ import { useTitane } from '../useTitane';
  * Composable handling business logic for the Inspector actions
  * (Deletion, Duplication, etc.)
  */
-export function useInspectorActions() {
+export const useInspectorActions = () => {
     const { engine, selectedEntityId, syncWorld } = useTitane();
 
     /**
