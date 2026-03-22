@@ -1,5 +1,5 @@
 <template>
-    <div class="w-full h-full relative bg-gray-950 overflow-hidden">
+    <div class="w-full h-full relative overflow-hidden">
         <canvas ref="canvasReference" class="w-full h-full block outline-none transition-opacity duration-700"
             :class="{ 'opacity-0': !canvasReference, 'opacity-100': canvasReference }" tabindex="0"></canvas>
     </div>

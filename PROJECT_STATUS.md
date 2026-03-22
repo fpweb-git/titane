@@ -29,12 +29,15 @@ A data-oriented, ECS-based 3D game engine.
 - [x] `useTitane` Nuxt Composable for global engine access.
 - [x] Standardized `apps/editor` and `packages/core` communication.
 - [x] ESLint configuration for custom Vue props line breaking.
+- [x] Optimized Reactivity bridge using `triggerRef`.
+- [x] `Hierarchy` component connected to the real ECS World state.
+- [x] Dynamic entity spawning through the UI.
 
 ## ⏳ In Progress
-- [ ] Making the Hierarchy reactive to real-time ECS changes.
 - [ ] Implementing Entity Selection state.
+- [ ] Building the Inspector to edit `Transform` values.
 
 ## 📋 Next Tasks
-1. Build a real `Hierarchy` component to list and select entities.
-2. Implement a `SelectionSystem` or a simple state to track the "Active Entity".
-3. Add a "Play/Pause" button in the Editor TopBar that calls `engine.start()` / `engine.stop()`
+1. Add `selectedEntityId` (ref) to `useTitane`.
+2. Create `Inspector.vue` to show Position/Rotation/Scale fields.
+3. Update `Transform` data in real-time when inputs change in the UI.

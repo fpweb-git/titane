@@ -24,7 +24,7 @@
 import type { NavigationMenuItem } from '@nuxt/ui'
 import { EntityFactory } from '@titane/core';
 
-const { engine, entities, syncWorld } = useTitane();
+const { engine, entities, syncWorld, selectedEntityId } = useTitane();
 
 /**
  * Action: Create a new entity
@@ -41,8 +41,7 @@ const createNewEntity = (): void => {
  * @param entityId The ID of the clicked entity.
  */
 const selectEntity = (entityId: number) => {
-    console.log(`Entity ${entityId} selected`);
-    // Future: Emit event or update a 'selectedEntity' state in useTitane
+    selectedEntityId.value = entityId;
 };
 
 const items = computed<NavigationMenuItem[]>(() => [

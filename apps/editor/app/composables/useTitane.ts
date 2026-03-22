@@ -10,6 +10,8 @@ const isInitialized = ref(false);
  */
 const activeEntities = shallowRef<Set<Entity>>(new Set());
 
+const selectedEntityId = ref<Entity | null>(null);
+
 export const useTitane = () => {
 
     const initEngine = (canvas: HTMLCanvasElement): TitaneEngine => {
@@ -38,6 +40,7 @@ export const useTitane = () => {
         isInitialized,
         /** This ref updates only when syncWorld() is called */
         entities: activeEntities as ShallowRef<Set<Entity>>,
+        selectedEntityId,
         initEngine,
         syncWorld
     };
