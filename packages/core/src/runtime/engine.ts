@@ -12,6 +12,7 @@ import { Clock } from '../utils/clock';
 export class TitaneEngine {
     /** The global ECS state containing all entities and components */
     public readonly world: World;
+    public isPaused: boolean = false;
 
     private scene: THREE.Scene;
     private camera: THREE.PerspectiveCamera;
@@ -101,7 +102,9 @@ export class TitaneEngine {
         const deltaTime = this.clock.getDelta();
 
         // 1. Logic phase: Update entity data
-        movementSystem(this.world, deltaTime);
+        if (!this.isPaused) {
+            movementSystem(this.world, deltaTime);
+        }
 
         // 2. Rendering phase: Sync ECS to Three.js and Draw
         renderSystem(this.world, this.scene, this.camera, this.renderer);

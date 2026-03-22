@@ -9,7 +9,21 @@
             </template>
             <SidebarHierarchy />
         </UDashboardSidebar>
-        <slot />
+
+        <div class="flex flex-col">
+            <UDashboardNavbar>
+                <template #right>
+                    <UButton
+                        :icon="isPlaying ? 'i-lucide-pause' : 'i-lucide-play'"
+                        color="neutral"
+                        variant="ghost"
+                        size="sm"
+                        @click="togglePlay" />
+                </template>
+            </UDashboardNavbar>
+
+            <slot />
+        </div>
         <UDashboardSidebar side="right" collapsible resizable class="border-l border-default">
             <template #header>
                 <h2 class="text-sm font-bold flex items-center gap-2">
@@ -21,3 +35,7 @@
         </UDashboardSidebar>
     </UDashboardGroup>
 </template>
+
+<script setup lang="ts">
+const { isPlaying, togglePlay } = useRuntime();
+</script>
