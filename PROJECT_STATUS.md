@@ -9,7 +9,7 @@ A data-oriented, ECS-based 3D game engine.
 ## Project Structure (Monorepo)
 - `packages/core`: The ECS World, Query engine, and Loop.
 - `packages/renderer`: Three.js implementation (bridges ECS data to 3D visuals).
-- `editor/titane-editor`: The Nuxt UI.
+- `editor/editor`: The Nuxt UI.
 
 ## Architecture Rules
 1. **Entities** are just `number` IDs.
@@ -18,18 +18,19 @@ A data-oriented, ECS-based 3D game engine.
 4. **Public API** must be used for all modifications (Internal Maps are private).
 
 ## 🎯 Current Milestone
-**ECS Kernel Stabilization (Functional & Documented)**
+**Engine Polishing & DX Improvements**
 
 ## ✅ Completed
-- [x] Full Functional ECS Core with String IDs.
-- [x] JSDoc documentation for all Kernel functions.
-- [x] `Transform` interface and factory implementation.
-- [x] Strict separation of data (Interfaces) and logic (Functions).
+- [x] Full Functional ECS Core.
+- [x] `TitaneEngine` Runtime with JSDoc and `handleResize`.
+- [x] Precise `Clock` for delta time management.
+- [x] `EntityFactory` to simplify entity spawning.
+- [x] Vue Viewport component with proper resize event management.
 
 ## ⏳ In Progress
-- [ ] Validating the data-flow with a basic test loop.
+- [ ] Centralizing Engine access via Nuxt Composables.
 
 ## 📋 Next Tasks
-1. Create a `MovementSystem` in `ecs/systems/` to test `query` and `getComponent`.
-2. Build a minimal `EngineRunner` that wraps the `World` and `requestAnimationFrame`.
-3. Connect the ECS state to the Nuxt Editor hierarchy view.
+1. Create a `useTitane` composable in Nuxt to share the engine instance.
+2. Build a basic `Hierarchy.vue` component to list active entities.
+3. Implement `destroyEntity` logic in the `RenderSystem` (cleanup Three.js objects).

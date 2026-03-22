@@ -15,7 +15,7 @@ It follows a strict **Entity-Component-System (ECS)** pattern to ensure maximum 
 ## 2. Monorepo Structure
 - `packages/core`: The ECS Runtime. Contains the World, Component storage, Query engine, and System Scheduler.
 - `packages/renderer`: The Three.js bridge. Contains the `RenderSystem` and 3D object pooling.
-- `editor/titane-editor`: Nuxt 4 application. Visualizes the ECS World and allows real-time data editing.
+- `apps/editor`: Nuxt 4 application. Visualizes the ECS World and allows real-time data editing.
 
 ---
 
