@@ -18,26 +18,19 @@ A data-oriented, ECS-based 3D game engine.
 4. **Public API** must be used for all modifications (Internal Maps are private).
 
 ## 🎯 Current Milestone
-**Engine Polishing & DX Improvements**
+**Modular Editor & Logic Decoupling**
 
 ## ✅ Completed
 - [x] Full Functional ECS Core.
-- [x] `TitaneEngine` Runtime with JSDoc and `handleResize`.
-- [x] Precise `Clock` for delta time management.
-- [x] `EntityFactory` to simplify entity spawning.
-- [x] Vue Viewport component with proper resize event management.
-- [x] `useTitane` Nuxt Composable for global engine access.
-- [x] Standardized `apps/editor` and `packages/core` communication.
-- [x] ESLint configuration for custom Vue props line breaking.
-- [x] Optimized Reactivity bridge using `triggerRef`.
-- [x] `Hierarchy` component connected to the real ECS World state.
-- [x] Dynamic entity spawning through the UI.
+- [x] RenderSystem with Cleanup phase.
+- [x] **Refactored Inspector logic into `useInspectorActions` composable.**
+- [x] Nuxt UI Integration for Hierarchy and Inspector.
 
 ## ⏳ In Progress
-- [ ] Implementing Entity Selection state.
-- [ ] Building the Inspector to edit `Transform` values.
+- [ ] Global Play/Pause simulation state.
+- [ ] Transform gizmos or simple click-to-select in viewport.
 
 ## 📋 Next Tasks
-1. Add `selectedEntityId` (ref) to `useTitane`.
-2. Create `Inspector.vue` to show Position/Rotation/Scale fields.
-3. Update `Transform` data in real-time when inputs change in the UI.
+1. Add a **Play/Pause** button in the TopBar (via a new `useRuntime` composable).
+2. Create a `MeshInspector` to change colors/shapes.
+3. Add a "Reset Scene" button in the hierarchy.

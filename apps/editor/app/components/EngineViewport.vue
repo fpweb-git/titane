@@ -33,8 +33,8 @@ onMounted(() => {
 
     // 2. Spawn a test cube (only if world is empty for demo)
     if (engine.world.entities.active.size === 0) {
-        const myCube = EntityFactory.createBox(engine.world, '#4ade80', { x: 0, y: 0, z: 0 });
-        addComponent(engine.world, myCube, VELOCITY_ID, createVelocity(0.8, 0.4, 0));
+        const demoCube = EntityFactory.createBox(engine.world, '#4ade80', { x: 0, y: 0, z: 0 });
+        addComponent(engine.world, demoCube, VELOCITY_ID, createVelocity(0, 0, 0));
     }
 
     // 3. Start simulation and listen for resize

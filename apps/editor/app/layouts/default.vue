@@ -10,7 +10,7 @@
             <SidebarHierarchy />
         </UDashboardSidebar>
         <slot />
-        <UDashboardSidebar side="right" collapsible resizable>
+        <UDashboardSidebar side="right" collapsible resizable class="border-l border-default">
             <template #header>
                 <h2 class="text-sm font-bold flex items-center gap-2">
                     <UIcon name="i-lucide-settings" />
