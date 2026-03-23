@@ -38,12 +38,13 @@ A data-oriented, ECS-based 3D game engine.
 - [x] **API Forteresse**: Encapsulated `world._components`.
 - [x] **Safe Accessors**: `add`, `get`, `remove`, `has`, and `updateComponent` (const arrows + JSDoc).
 - [x] **Optimized Query**: "Smallest-store-first" iteration logic (const arrow + JSDoc).
+- [x] **Entity Naming**: `Name` component implemented and exported correctly.
 
 ## ⏳ In Progress
-- [ ] **Entity Naming**: Transitioning to "named" entities for better UX.
+- [ ] **UI Sync Refresh**: Ensuring Hierarchy updates immediately when a Name is changed.
 - [ ] **Command API for Editor**: Finishing the `updateComponent` integration in the UI.
 
 ## 📋 Next Tasks
-1. **Name Component**: Create the data structure and factory.
-2. **Hierarchy Refresh**: Update the Sidebar to show names instead of IDs.
-3. **Scheduler**: Implement strict execution phases (Input -> Logic -> Render).
+1. **Inspector Name Field**: Add a text input to test the `updateComponent` API.
+2. **Scheduler Phases**: Enforce execution order (Systems -> Render).
+3. **Reset Scene**: Basic cloning logic for world state.

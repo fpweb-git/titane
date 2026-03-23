@@ -25,13 +25,10 @@
 
 <script setup lang="ts">
 import type { NavigationMenuItem } from '@nuxt/ui'
-import { EntityFactory } from '@titane/core';
+import { EntityFactory, getComponent, NAME_ID, type Name } from '@titane/core';
 
 const { engine, entities, syncWorld, selectedEntityId } = useTitane();
 
-/**
- * Action: Create a new entity
- */
 const createNewEntity = (): void => {
     if (!engine.value) return;
 
@@ -39,25 +36,36 @@ const createNewEntity = (): void => {
     syncWorld();
 };
 
-/**
- * Handles the selection of an entity.
- * @param entityId The ID of the clicked entity.
- */
 const selectEntity = (entityId: number) => {
     selectedEntityId.value = entityId;
 };
 
-const items = computed<NavigationMenuItem[]>(() => [
-    {
-        label: 'World',
-        defaultOpen: true,
-        slot: 'add' as const,
-        children: Array.from(entities.value).map((id) => ({
-            label: `GameObject #${id}`,
-            icon: 'i-lucide-box',
-            slot: 'actions' as const,
-            onSelect: () => selectEntity(id)
-        }))
-    }
-]);
+/**
+* Transforms the ECS World state into Nuxt UI Navigation items.
+* Fetches the 'Name' component for each entity to provide a clear label.
+*/
+const items = computed<NavigationMenuItem[]>(() => {
+    if (!engine.value) return [];
+    const world = engine.value.world;
+
+    return [
+        {
+            label: 'World',
+            defaultOpen: true,
+            slot: 'add' as const,
+            children: Array.from(entities.value).map((id) => {
+                const componentName = getComponent<Name>(world, id, NAME_ID);
+                const displayName = componentName?.value || `GameObject #${id}`;
+
+                return {
+                    label: displayName,
+                    icon: 'i-lucide-box',
+                    slot: 'actions' as const,
+                    active: selectedEntityId.value === id,
+                    onSelect: () => selectEntity(id)
+                };
+            })
+        }
+    ];
+});
 </script>

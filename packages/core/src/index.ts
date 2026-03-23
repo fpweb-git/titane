@@ -11,6 +11,7 @@ export * from './ecs/components/transform';
 export * from './ecs/components/velocity';
 export * from './ecs/components/mesh';
 export * from './ecs/systems/movement';
+export * from './ecs/components/name';
 
 // Runtime Orchestrator
 export * from './runtime/engine';
