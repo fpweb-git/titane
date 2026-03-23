@@ -15,7 +15,7 @@ export const query = (world: World, componentIds: ComponentId[]): Entity[] => {
     // Ignore IDs that don't exist yet in the World
     const stores = componentIds
         .map(id => world._components.get(id))
-        .filter((store): store is Map<Entity, any> => !!store);
+        .filter((store): store is Map<Entity, unknown> => !!store);
 
     // If we haven't found all the requested stores, no one can have all the components
     if (stores.length !== componentIds.length) return [];

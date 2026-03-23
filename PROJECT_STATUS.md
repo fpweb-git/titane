@@ -21,6 +21,8 @@ A data-oriented, ECS-based 3D game engine.
 **Editor Workspace Foundations & Runtime Control**
 
 ## ✅ Completed
+- [x] **Renderer Decoupling**: Injected `IRenderer` into `TitaneEngine`, replacing hardcoded `ThreeRenderer`.
+- [x] **ECS Typings**: Strict `unknown` usage instead of `any` internally for Component Maps.
 - [x] **Functional ECS Core**: Strict data/logic separation (Entity, Component, Query).
 - [x] **Advanced Runtime**: `TitaneEngine` with independent Logic and Render loops.
 - [x] **DeltaTime Management**: Precision `Clock` for frame-independent movement.

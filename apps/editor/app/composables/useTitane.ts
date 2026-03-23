@@ -1,4 +1,4 @@
-import { TitaneEngine, type Entity } from '@titane/core';
+import { TitaneEngine, ThreeRenderer, type Entity } from '@titane/core';
 import { type ShallowRef } from 'vue';
 
 const engineInstance = shallowRef<TitaneEngine | null>(null);
@@ -17,7 +17,8 @@ export const useTitane = () => {
     const initEngine = (canvas: HTMLCanvasElement): TitaneEngine => {
         if (engineInstance.value) return engineInstance.value;
 
-        const engine = new TitaneEngine(canvas);
+        const renderer = new ThreeRenderer();
+        const engine = new TitaneEngine(renderer, canvas);
         engineInstance.value = engine;
 
         // Link our ref to the engine's active entities set

@@ -12,7 +12,7 @@ export interface World {
         recycled: Entity[];
     };
     /** @internal Internal component storage - Use API functions to access */
-    readonly _components: Map<ComponentId, Map<Entity, any>>;
+    readonly _components: Map<ComponentId, Map<Entity, unknown>>;
 }
 
 /**
@@ -25,5 +25,5 @@ export const createWorld = (): World => ({
         active: new Set<Entity>(),
         recycled: [],
     },
-    _components: new Map<ComponentId, Map<Entity, any>>(),
+    _components: new Map<ComponentId, Map<Entity, unknown>>(),
 });

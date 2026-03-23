@@ -1,6 +1,6 @@
 {
   "name": "@titane/core",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Titane Core Engine",
   "main": "./dist/index.js",
   "module": "./dist/index.js",

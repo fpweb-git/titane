@@ -2,7 +2,6 @@ import { World, createWorld } from '../ecs/world';
 import { movementSystem } from '../ecs/systems/movement';
 import { Clock } from '../utils/clock';
 import { IRenderer } from './renderer-interface';
-import { ThreeRenderer } from '../rendering/three-renderer';
 
 /**
  * The high-level runner for the Titane Engine.
@@ -17,14 +16,13 @@ export class TitaneEngine {
     private isRunning: boolean = false;
 
     /**
+     * @param renderer - The renderer implementation to use.
      * @param canvasElement - The target canvas for rendering.
      */
-    constructor(canvasElement: HTMLCanvasElement) {
+    constructor(renderer: IRenderer, canvasElement: HTMLCanvasElement) {
         this.world = createWorld();
         this.clock = new Clock();
-
-        // We use the Three.js implementation by default
-        this.renderer = new ThreeRenderer();
+        this.renderer = renderer;
         this.renderer.init(canvasElement);
     }
 

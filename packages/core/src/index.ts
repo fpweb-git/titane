@@ -14,6 +14,8 @@ export * from './ecs/systems/movement';
 
 // Runtime Orchestrator
 export * from './runtime/engine';
+export * from './runtime/renderer-interface';
+export * from './rendering/three-renderer';
 
 // Utils
 export * from './utils/clock';

@@ -16,7 +16,7 @@ export const addComponent = <T>(
     data: T
 ): void => {
     if (!world._components.has(componentId)) {
-        world._components.set(componentId, new Map<Entity, any>());
+        world._components.set(componentId, new Map<Entity, unknown>());
     }
     world._components.get(componentId)!.set(entityId, data);
 };
