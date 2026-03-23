@@ -3,6 +3,7 @@ import { Entity, ComponentId } from './types';
 
 /**
  * Associates a component data object with an entity.
+ * Overwrites existing data if the component is already present.
  * @param world The world state.
  * @param entityId The target entity.
  * @param componentId The unique string ID of the component type.
@@ -14,10 +15,10 @@ export const addComponent = <T>(
     componentId: ComponentId,
     data: T
 ): void => {
-    if (!world.components.has(componentId)) {
-        world.components.set(componentId, new Map<Entity, any>());
+    if (!world._components.has(componentId)) {
+        world._components.set(componentId, new Map<Entity, any>());
     }
-    world.components.get(componentId)!.set(entityId, data);
+    world._components.get(componentId)!.set(entityId, data);
 };
 
 /**
@@ -32,7 +33,22 @@ export const getComponent = <T>(
     entityId: Entity,
     componentId: ComponentId
 ): T | undefined => {
-    return world.components.get(componentId)?.get(entityId) as T | undefined;
+    return world._components.get(componentId)?.get(entityId) as T | undefined;
+};
+
+/**
+ * Checks if an entity possesses a specific component.
+ * @param world The world state.
+ * @param entityId The target entity.
+ * @param componentId The unique string ID of the component type.
+ * @returns True if the component exists for this entity.
+ */
+export const hasComponent = (
+    world: World,
+    entityId: Entity,
+    componentId: ComponentId
+): boolean => {
+    return world._components.get(componentId)?.has(entityId) ?? false;
 };
 
 /**
@@ -46,5 +62,25 @@ export const removeComponent = (
     entityId: Entity,
     componentId: ComponentId
 ): void => {
-    world.components.get(componentId)?.delete(entityId);
+    world._components.get(componentId)?.delete(entityId);
+};
+
+/**
+ * Safely updates a component's data using a callback function.
+ * This is the preferred way for the Editor to mutate state.
+ * @param world The world state.
+ * @param entityId The target entity.
+ * @param componentId The unique string ID of the component type.
+ * @param updater A function that receives the current data and modifies it.
+ */
+export const updateComponent = <T>(
+    world: World,
+    entityId: Entity,
+    componentId: ComponentId,
+    updater: (current: T) => void
+): void => {
+    const data = getComponent<T>(world, entityId, componentId);
+    if (data) {
+        updater(data);
+    }
 };

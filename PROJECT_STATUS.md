@@ -29,13 +29,19 @@ A data-oriented, ECS-based 3D game engine.
 - [x] **Simulation Control**: Play/Pause/Step functionality via `useRuntime`.
 - [x] **Visual Aids**: Integrated `GridHelper` in the 3D viewport.
 - [x] **Memory Management**: Automatic GPU resource cleanup (`dispose`) in `RenderSystem`.
+- [x] **Renderer Abstraction**: `IRenderer` interface defined.
+- [x] **Three.js Driver**: Encapsulated camera and scene logic.
+- [x] **Corrected HandleResize**: Decoupled resize logic (now driver-side).
+- [x] **Clean Runtime**: `TitaneEngine` no longer imports `THREE`.
+- [x] **API Forteresse**: Encapsulated `world._components`.
+- [x] **Safe Accessors**: `add`, `get`, `remove`, `has`, and `updateComponent` (const arrows + JSDoc).
+- [x] **Optimized Query**: "Smallest-store-first" iteration logic (const arrow + JSDoc).
 
 ## ⏳ In Progress
-- [ ] **Scene State Management**: Capturing the initial world state before "Play".
-- [ ] **Viewport Interaction**: Raycasting for clicking objects directly in 3D.
+- [ ] **Entity Naming**: Transitioning to "named" entities for better UX.
+- [ ] **Command API for Editor**: Finishing the `updateComponent` integration in the UI.
 
 ## 📋 Next Tasks
-1. **Entity Naming**: Add a `Name` component to replace "GameObject #ID" with custom names.
-2. **Scene Reset**: Implement a way to revert all entities to their "Pre-Play" positions.
-3. **Transform Gizmos**: Add visual axes (X, Y, Z) to the selected entity in the viewport.
-4. **Enhanced Factory**: Allow color and primitive selection (Sphere, Plane) in the UI.
+1. **Name Component**: Create the data structure and factory.
+2. **Hierarchy Refresh**: Update the Sidebar to show names instead of IDs.
+3. **Scheduler**: Implement strict execution phases (Input -> Logic -> Render).

@@ -1,18 +1,16 @@
-import { Entity, ComponentId, System } from './types';
+import { Entity, ComponentId } from './types';
 
 /**
  * The World interface holds the entire state of the engine.
  * It is a purely data-driven structure.
  */
 export interface World {
-    entities: {
+    readonly entities: {
         nextId: number;
-        recycled: Entity[];
         active: Set<Entity>;
     };
-    /** Map of Component IDs to a sub-map of Entity IDs and their respective data */
-    components: Map<ComponentId, Map<Entity, any>>;
-    systems: System[];
+    /** @internal Internal component storage - Use API functions to access */
+    readonly _components: Map<ComponentId, Map<Entity, any>>;
 }
 
 /**
@@ -22,9 +20,7 @@ export interface World {
 export const createWorld = (): World => ({
     entities: {
         nextId: 0,
-        recycled: [],
-        active: new Set()
+        active: new Set<Entity>(),
     },
-    components: new Map(),
-    systems: []
+    _components: new Map<ComponentId, Map<Entity, any>>(),
 });

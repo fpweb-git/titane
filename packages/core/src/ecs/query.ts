@@ -3,6 +3,7 @@ import { Entity, ComponentId } from './types';
 
 /**
  * Filters the world for all entities that possess the full set of required components.
+ * Optimization: Iterates over the smallest component store first to reduce checks.
  * @param world The world state to query.
  * @param componentIds An array of component string identifiers.
  * @returns An array of matching Entity IDs.
@@ -10,18 +11,29 @@ import { Entity, ComponentId } from './types';
 export const query = (world: World, componentIds: ComponentId[]): Entity[] => {
     if (componentIds.length === 0) return [];
 
-    // Optimization: start with the smallest store if possible (currently uses the first one)
-    const firstStore = world.components.get(componentIds[0]);
-    if (!firstStore) return [];
+    // 1. Get the stores corresponding to the requested IDs
+    // Ignore IDs that don't exist yet in the World
+    const stores = componentIds
+        .map(id => world._components.get(id))
+        .filter((store): store is Map<Entity, any> => !!store);
+
+    // If we haven't found all the requested stores, no one can have all the components
+    if (stores.length !== componentIds.length) return [];
+
+    // 2. OPTIMIZATION: Sort stores by size (number of entities)
+    // We want to iterate over the "rarest" store to minimize loops
+    stores.sort((a, b) => a.size - b.size);
+    const [smallestStore, ...otherStores] = stores;
 
     const matchingEntities: Entity[] = [];
 
-    for (const entityId of firstStore.keys()) {
+    // 3. Iterate only over the keys of the smallest store
+    for (const entityId of smallestStore.keys()) {
         let hasAllComponents = true;
 
-        for (let index = 1; index < componentIds.length; index++) {
-            const store = world.components.get(componentIds[index]);
-            if (!store || !store.has(entityId)) {
+        // Check for the presence of the ID in all other required stores
+        for (const store of otherStores) {
+            if (!store.has(entityId)) {
                 hasAllComponents = false;
                 break;
             }
