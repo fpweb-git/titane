@@ -17,7 +17,7 @@
                 size="sm"
                 @click.stop="createNewEntity" />
         </template>
-        <template #actions-trailing="{ item }">
+        <template #actions-trailing>
             <UiEntityActions />
         </template>
     </UNavigationMenu>

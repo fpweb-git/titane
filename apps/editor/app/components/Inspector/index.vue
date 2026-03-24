@@ -5,7 +5,7 @@
             <USeparator />
             <InspectorItem :transform="transform" />
         </div>
-        <InspectorDefault v-else />
+        <InspectorNoSelection v-else />
     </div>
 </template>
 
@@ -14,11 +14,7 @@ import { TRANSFORM_ID, getComponent, type Transform } from '@titane/core';
 
 const { engine, selectedEntityId } = useTitane();
 
-/**
- * Retrieves the transform data of the selected entity.
- * Since it is a simple object, modifications via v-model will be 
- * reflected directly in the engine.
- */
+// Retrieves the transform data of the selected entity.
 const transform = computed<Transform | null | undefined>(() => {
     if (selectedEntityId.value === null || !engine.value) return null;
 

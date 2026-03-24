@@ -9,7 +9,6 @@
 </template>
 
 <script setup lang="ts">
-import type { Entity } from '@titane/core';
 import type { DropdownMenuItem } from '@nuxt/ui'
 import { useInspectorActions } from '~/composables/inspector/useInspectorActions';
 

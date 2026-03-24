@@ -1,18 +1,17 @@
 <template>
     <div class="w-full h-full relative overflow-hidden">
-        <canvas ref="canvasReference" class="w-full h-full block outline-none transition-opacity duration-700"
-            :class="{ 'opacity-0': !canvasReference, 'opacity-100': canvasReference }" tabindex="0"></canvas>
+        <canvas
+            ref="canvasReference"
+            class="w-full h-full block outline-none transition-opacity duration-700"
+            :class="{ 'opacity-0': !canvasReference, 'opacity-100': canvasReference }"
+            tabindex="0">
+        </canvas>
     </div>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount } from 'vue';
-import {
-    EntityFactory,
-    addComponent,
-    VELOCITY_ID,
-    createVelocity
-} from '@titane/core';
+import { EntityFactory, addComponent, VELOCITY_ID, createVelocity } from '@titane/core';
 
 const canvasReference = ref<HTMLCanvasElement | null>(null);
 const { initEngine } = useTitane();
@@ -28,7 +27,6 @@ const onResize = () => {
 onMounted(() => {
     if (!canvasReference.value) return;
 
-    // 1. Initialize the global engine via the composable
     const engine = initEngine(canvasReference.value);
 
     // 2. Spawn a test cube (only if world is empty for demo)
@@ -44,7 +42,5 @@ onMounted(() => {
 
 onBeforeUnmount(() => {
     window.removeEventListener('resize', onResize);
-    // Note: We don't necessarily call disposeEngine() here 
-    // if we want the engine to persist between page navigations.
 });
 </script>

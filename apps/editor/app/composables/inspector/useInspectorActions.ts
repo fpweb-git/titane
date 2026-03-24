@@ -32,7 +32,7 @@ export const useInspectorActions = () => {
         const newId = createEntity(world);
 
         // Deep clone each component store entry
-        world.components.forEach((store, componentId) => {
+        world._components.forEach((store, componentId) => {
             const sourceData = store.get(sourceId);
             if (sourceData) {
                 const clonedData = JSON.parse(JSON.stringify(sourceData));
