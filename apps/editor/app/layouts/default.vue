@@ -3,7 +3,7 @@
         <UDashboardSidebar collapsible resizable>
             <template #header>
                 <h2 class="text-sm font-bold flex items-center gap-2">
-                    <UIcon name="i-lucide-box" />
+                    <UIcon name="i-lucide-file-stack" />
                     Titane
                 </h2>
             </template>
@@ -16,11 +16,11 @@
         </div>
         <UDashboardSidebar side="right" collapsible resizable class="border-l border-default">
             <template #header>
-                <h2 class="text-sm font-bold flex items-center gap-2">
-                    <UIcon name="i-lucide-settings" />
+                <h2 class="text-sm">
                     Inspector
                 </h2>
             </template>
+            <USeparator />
             <Inspector />
         </UDashboardSidebar>
     </UDashboardGroup>

@@ -42,9 +42,9 @@ A data-oriented, ECS-based 3D game engine.
 - [x] **Documentation**: Translated README.md to English to unify project language.
 - [x] **Scene State Snapshots**: Deep cloning for "Reset Scene" functionality.
 - [x] **JSON Serialization**: Logic to stringify/parse the `World` state while preserving Maps and IDs.
+- [x] **File System Bridge**: Adding "Save" and "Open" buttons in the Editor TopBar.
 
 ## ⏳ In Progress
-- [ ] **File System Bridge**: Adding "Save" and "Open" buttons in the Editor TopBar.
 - [ ] **Input System**: Capturing Keyboard/Mouse events to be stored in the ECS for system consumption.
 - [ ] **API Protection**: Final pass to ensure no direct `any` or illegal internal access remains.
 

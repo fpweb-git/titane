@@ -13,6 +13,7 @@
                 variant="ghost"
                 size="sm"
                 @click="toggleGrid" />
+            <TopbarMenu />
         </template>
     </UDashboardNavbar>
 </template>
