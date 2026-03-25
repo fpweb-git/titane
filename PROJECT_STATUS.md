@@ -43,10 +43,11 @@ A data-oriented, ECS-based 3D game engine.
 - [x] **Architecture Diagram**: Scanned core implementation and generated detailed Mermaid dependency graph in ARCHITECTURE.md.
 
 ## ⏳ In Progress
-- [ ] **UI Sync Refresh**: Ensuring Hierarchy updates immediately when a Name is changed.
+- [ ] **Scene State Snapshots**: Deep cloning for "Reset Scene" functionality.
+- [ ] **Input System**: First implementation of the INPUT phase.
 - [ ] **Command API for Editor**: Finishing the `updateComponent` integration in the UI.
 
 ## 📋 Next Tasks
-1. **Inspector Name Field**: Add a text input to test the `updateComponent` API.
-2. **Scheduler Phases**: Enforce execution order (Systems -> Render).
-3. **Reset Scene**: Basic cloning logic for world state.
+1. **Reset Scene**: Store the "Spawn State" to revert changes after a Play session.
+2. **Transform System Refactor**: Properly separate local vs world transforms.
+3. **Input Driver**: Capture keyboard/mouse and store it in the ECS for systems to use.
