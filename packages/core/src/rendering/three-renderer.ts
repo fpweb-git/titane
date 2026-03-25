@@ -15,6 +15,7 @@ export class ThreeRenderer implements IRenderer {
     private camera!: THREE.PerspectiveCamera;
     private renderer!: THREE.WebGLRenderer;
     private gridHelper!: THREE.GridHelper;
+    /** Internal cache to link ECS entities to Three.js objects */
     private entityObjectMap = new Map<number, THREE.Mesh>();
 
     public init(canvas: HTMLCanvasElement): void {
@@ -40,57 +41,56 @@ export class ThreeRenderer implements IRenderer {
         this.scene.add(this.gridHelper);
     }
 
+    public handleResize(): void {
+        const canvas = this.renderer.domElement;
+        const width = canvas.clientWidth;
+        const height = canvas.clientHeight;
+
+        if (canvas.width !== width || canvas.height !== height) {
+            this.renderer.setSize(width, height, false);
+            this.camera.aspect = width / height;
+            this.camera.updateProjectionMatrix();
+        }
+    }
+
     public setSize(width: number, height: number): void {
         this.renderer.setSize(width, height, false);
         this.camera.aspect = width / height;
         this.camera.updateProjectionMatrix();
     }
 
-    public handleResize(): void {
-        // The driver owns the Three.js renderer, so it can access the canvas
-        const canvas = this.renderer.domElement;
-        const width = canvas.clientWidth;
-        const height = canvas.clientHeight;
-
-        // Check if we really need to update (avoid unnecessary calculations)
-        if (canvas.width !== width || canvas.height !== height) {
-            // 1. Update the WebGL buffer
-            this.renderer.setSize(width, height, false);
-
-            // 2. Update the camera (the driver knows it, not the engine)
-            this.camera.aspect = width / height;
-            this.camera.updateProjectionMatrix();
-        }
-    }
-
     public setGridVisible(visible: boolean): void {
         this.gridHelper.visible = visible;
     }
 
-    /**
-     * The internal Render Loop (previously renderSystem).
-     * Synchronizes ECS entities with Three.js meshes.
-     */
     public render(world: World): void {
         const activeEntities = query(world, [TRANSFORM_ID, MESH_ID]);
         const activeEntitiesSet = new Set(activeEntities);
 
-        // 1. Cleanup (Dispose deleted entities)
+        // 1. PHASE DE NETTOYAGE (Cleanup)
         for (const [entityId, threeMesh] of this.entityObjectMap.entries()) {
             if (!activeEntitiesSet.has(entityId)) {
                 this.scene.remove(threeMesh);
+
+                // Clean up GPU memory
                 threeMesh.geometry.dispose();
-                (threeMesh.material as THREE.Material).dispose();
+                if (Array.isArray(threeMesh.material)) {
+                    threeMesh.material.forEach(m => m.dispose());
+                } else {
+                    threeMesh.material.dispose();
+                }
+
                 this.entityObjectMap.delete(entityId);
             }
         }
 
-        // 2. Update & Sync
+        // 2. PHASE DE MISE À JOUR & CRÉATION
         for (const entityId of activeEntities) {
             const transform = getComponent<Transform>(world, entityId, TRANSFORM_ID);
             const meshData = getComponent<MeshData>(world, entityId, MESH_ID);
             if (!transform || !meshData) continue;
 
+            // Creation if new
             if (!this.entityObjectMap.has(entityId)) {
                 const geometry = new THREE.BoxGeometry(1, 1, 1);
                 const material = new THREE.MeshStandardMaterial({ color: meshData.color });
@@ -99,17 +99,25 @@ export class ThreeRenderer implements IRenderer {
                 this.entityObjectMap.set(entityId, mesh);
             }
 
+            // Synchro des transformations
             const mesh = this.entityObjectMap.get(entityId)!;
             mesh.position.set(transform.position.x, transform.position.y, transform.position.z);
             mesh.rotation.set(transform.rotation.x, transform.rotation.y, transform.rotation.z);
             mesh.scale.set(transform.scale.x, transform.scale.y, transform.scale.z);
         }
 
+        // 3. FINAL DRAW
         this.renderer.render(this.scene, this.camera);
     }
 
     public dispose(): void {
         this.renderer.dispose();
+        // Clean up all remaining objects
+        for (const mesh of this.entityObjectMap.values()) {
+            mesh.geometry.dispose();
+            if (Array.isArray(mesh.material)) mesh.material.forEach(m => m.dispose());
+            else mesh.material.dispose();
+        }
         this.entityObjectMap.clear();
     }
 }
