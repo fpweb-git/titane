@@ -84,7 +84,7 @@ export class ThreeRenderer implements IRenderer {
             }
         }
 
-        // 2. PHASE DE MISE À JOUR & CRÉATION
+        // 2. UPDATE & SYNC
         for (const entityId of activeEntities) {
             const transform = getComponent<Transform>(world, entityId, TRANSFORM_ID);
             const meshData = getComponent<MeshData>(world, entityId, MESH_ID);
@@ -99,7 +99,7 @@ export class ThreeRenderer implements IRenderer {
                 this.entityObjectMap.set(entityId, mesh);
             }
 
-            // Synchro des transformations
+            // Sync transformations
             const mesh = this.entityObjectMap.get(entityId)!;
             mesh.position.set(transform.position.x, transform.position.y, transform.position.z);
             mesh.rotation.set(transform.rotation.x, transform.rotation.y, transform.rotation.z);

@@ -4,6 +4,7 @@ import { Clock } from '../utils/clock';
 import { IRenderer } from './renderer-interface';
 import { Scheduler, createScheduler, registerSystem, runScheduler } from '../ecs/scheduler';
 import { Phase } from '../ecs/system';
+import { cloneWorld } from '../ecs/world-utils';
 
 /**
  * The high-level runner for the Titane Engine.
@@ -11,11 +12,12 @@ import { Phase } from '../ecs/system';
  */
 export class TitaneEngine {
     /** The single source of truth for the game state */
-    public readonly world: World;
+    public world: World;
 
     /** Toggle to freeze logic systems without stopping the render loop */
-    public isPaused: boolean = false;
+    public isPaused: boolean = true;
 
+    private snapshot: World | null = null;
     private scheduler: Scheduler;
     private renderer: IRenderer;
     private clock: Clock;
@@ -72,6 +74,27 @@ export class TitaneEngine {
      */
     public stop(): void {
         this.isRunning = false;
+    }
+
+    /**
+     * Captures the current state of the world.
+     */
+    public saveSnapshot(): void {
+        this.snapshot = cloneWorld(this.world);
+        console.log('Snapshot saved');
+    }
+
+    /**
+     * Restores the world to its previously saved state.
+     */
+    public restoreSnapshot(): void {
+        if (!this.snapshot) {
+            console.warn('No snapshot found to restore');
+            return;
+        }
+        // Replace the current world with the snapshot clone
+        this.world = cloneWorld(this.snapshot);
+        console.log('World restored from snapshot');
     }
 
     /**

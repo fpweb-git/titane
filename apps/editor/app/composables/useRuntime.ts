@@ -1,24 +1,34 @@
-import { ref } from 'vue';
 import { useTitane } from './useTitane';
 
-const isPlaying = ref<boolean>(true);
+const isPlaying = ref<boolean>(false);
 const isGridVisible = ref<boolean>(true);
 
 /**
  * Controls the engine's execution state.
  */
 export const useRuntime = () => {
-    const { engine } = useTitane();
+    const { engine, syncWorld } = useTitane();
 
     /**
-     * Toggles between Play and Pause states.
+     * Toggles between Simulation mode (Play) and Edit mode (Pause). 
      */
     const togglePlay = () => {
         if (!engine.value) return;
 
         isPlaying.value = !isPlaying.value;
-        engine.value.isPaused = !isPlaying.value;
+
+        if (isPlaying.value) {
+            // Before launching the simulation, save the "Edit" state
+            engine.value.saveSnapshot();
+            engine.value.isPaused = false;
+        } else {
+            engine.value.isPaused = true;
+            // Optionnel : we restore directly to return to the initial state
+            engine.value.restoreSnapshot();
+            syncWorld();
+        }
     };
+
 
     /**
      * Toggles the visibility of the ground grid.
