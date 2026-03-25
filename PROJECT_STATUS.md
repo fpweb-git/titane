@@ -40,14 +40,26 @@ A data-oriented, ECS-based 3D game engine.
 - [x] **Optimized Query**: "Smallest-store-first" iteration logic (const arrow + JSDoc).
 - [x] **Entity Naming**: `Name` component implemented and exported correctly.
 - [x] **Documentation**: Translated README.md to English to unify project language.
-- [x] **Architecture Diagram**: Scanned core implementation and generated detailed Mermaid dependency graph in ARCHITECTURE.md.
+- [x] **Scene State Snapshots**: Deep cloning for "Reset Scene" functionality.
+- [x] **JSON Serialization**: Logic to stringify/parse the `World` state while preserving Maps and IDs.
 
 ## ⏳ In Progress
-- [ ] **Scene State Snapshots**: Deep cloning for "Reset Scene" functionality.
-- [ ] **Input System**: First implementation of the INPUT phase.
-- [ ] **Command API for Editor**: Finishing the `updateComponent` integration in the UI.
+- [ ] **File System Bridge**: Adding "Save" and "Open" buttons in the Editor TopBar.
+- [ ] **Input System**: Capturing Keyboard/Mouse events to be stored in the ECS for system consumption.
+- [ ] **API Protection**: Final pass to ensure no direct `any` or illegal internal access remains.
 
 ## 📋 Next Tasks
-1. **Reset Scene**: Store the "Spawn State" to revert changes after a Play session.
-2. **Transform System Refactor**: Properly separate local vs world transforms.
-3. **Input Driver**: Capture keyboard/mouse and store it in the ECS for systems to use.
+
+### 1️⃣ Phase: Persistence (High Priority)
+1. **JSON Export/Import**: Create `serializeWorld` and `deserializeWorld` utilities.
+2. **File System Integration**: Add "Save Project" to download a `.json` file and "Load Project" to restore it.
+3. **Asset Metadata**: Basic structure to track external assets (textures/models) in the JSON schema.
+
+### 2️⃣ Phase: Interaction (Medium Priority)
+1. **Input Driver**: Map browser events to an `Input` component or global state in the ECS.
+2. **Transform Refactor**: Separation of `LocalTransform` and `WorldTransform` to support parenting logic.
+3. **Manual Reset**: Add a dedicated "Reset Scene" button in the UI to revert to the last snapshot without toggling Play.
+
+### 3️⃣ Phase: Visual Tooling (Long Term)
+1. **Transformation Gizmos**: On-screen handles for Translate, Rotate, and Scale.
+2. **Viewport Raycasting**: Entity selection by clicking directly on 3D meshes.
