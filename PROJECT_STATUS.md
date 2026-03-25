@@ -39,6 +39,8 @@ A data-oriented, ECS-based 3D game engine.
 - [x] **Safe Accessors**: `add`, `get`, `remove`, `has`, and `updateComponent` (const arrows + JSDoc).
 - [x] **Optimized Query**: "Smallest-store-first" iteration logic (const arrow + JSDoc).
 - [x] **Entity Naming**: `Name` component implemented and exported correctly.
+- [x] **Documentation**: Translated README.md to English to unify project language.
+- [x] **Architecture Diagram**: Scanned core implementation and generated detailed Mermaid dependency graph in ARCHITECTURE.md.
 
 ## ⏳ In Progress
 - [ ] **UI Sync Refresh**: Ensuring Hierarchy updates immediately when a Name is changed.

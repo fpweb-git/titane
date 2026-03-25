@@ -17,6 +17,54 @@ It follows a strict **Entity-Component-System (ECS)** pattern to ensure maximum 
 - `packages/renderer`: The Three.js bridge. Contains the `RenderSystem` and 3D object pooling.
 - `apps/editor`: Nuxt 4 application. Visualizes the ECS World and allows real-time data editing.
 
+### Dependency Graph & Core Engine Flow
+```mermaid
+graph TD
+    %% Main API and Entry Point
+    Dev[Developer / Game Logic] -->|Instantiates| Engine[TitaneEngine<br/><i>Runtime Orchestrator</i>]
+    
+    subgraph Core Engine Packages
+        Engine -->|Creates & Owns| World[ECS World]
+        Engine -->|Owns| Clock[Clock<br/><i>DeltaTime</i>]
+        
+        subgraph ECS Data Structure
+            World -->|Stores| EntMap[Entities<br/><i>IDs, Active/Recycled Set</i>]
+            World -->|Stores| CompMap[_components Map<br/><i>ComponentId -> Map Entity, Data</i>]
+        end
+        
+        %% Execution Loop
+        subgraph Game Loop Phase
+            Engine <-->|requestAnimationFrame| Loop((Main Loop))
+            Loop -->|Phase 1: Update| Sys[Systems executing Queries<br/><i>e.g. movementSystem</i>]
+            Sys -->|Read/Write| CompMap
+            Loop -->|Phase 2: Sync & Draw| IRend[IRenderer.render]
+        end
+    end
+
+    %% Rendering Driver implementation
+    subgraph Rendering Package
+        IRend -->|Implemented by| Three[ThreeRenderer]
+        Three -->|Syncs Entities to| ObjMap[Object3D Maps]
+        Three -->|Uses| Canvas[CanvasElement]
+    end
+
+    %% Editor Layer
+    subgraph Editor Workspace
+        Editor[Nuxt 4 / Vue] -.->|Observes via proxy/events| Engine
+        Editor -.->|Mutates data| CompMap
+    end
+
+    classDef core fill:#2a2a2a,stroke:#333,stroke-width:2px,color:#fff;
+    classDef ecs fill:#4d5656,stroke:#f1c40f,stroke-width:2px,color:#fff;
+    classDef render fill:#1f618d,stroke:#5dade2,stroke-width:2px,color:#fff;
+    classDef editor fill:#117a65,stroke:#48c9b0,stroke-width:2px,color:#fff;
+
+    class Engine,Loop,Clock core;
+    class World,EntMap,CompMap,Sys ecs;
+    class IRend,Three,ObjMap,Canvas render;
+    class Editor editor;
+```
+
 ---
 
 ## 3. ECS Specification
