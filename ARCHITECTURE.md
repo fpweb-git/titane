@@ -1,4 +1,4 @@
-# Titane Engine - Architecture Specification 🪐
+# Titane Engine - Architecture Specification
 
 ## 1. Vision & Philosophy
 Titane is a high-performance, **Data-Oriented** 3D game engine for the web. 

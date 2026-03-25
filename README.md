@@ -29,6 +29,8 @@
 
 Titane is built on a layered architecture. The end developer only interacts with the top layer, while the engine optimizes data deep down.
 
+For an in-depth look at the internal data flow, ECS definitions and the Engine loop, check out the [Architecture Specification](ARCHITECTURE.md).
+
 ```mermaid
 graph TD
     A[Developer / Scripting API] -->|High-Level Manipulation| B(Titane API Facade)
