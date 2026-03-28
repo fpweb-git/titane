@@ -30,9 +30,13 @@ export const useTitane = () => {
 
     /**
      * Notifies Vue that the world state has changed.
-     * Call this after adding/removing entities.
+     * Call this after adding/removing entities or restoring the world state.
      */
     const syncWorld = () => {
+        if (engineInstance.value) {
+            // Ensure the ref always points to the current active world instance
+            activeEntities.value = engineInstance.value.world.entities.active;
+        }
         triggerRef(activeEntities);
     };
 

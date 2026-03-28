@@ -1,4 +1,4 @@
-import { serializeWorld, deserializeWorld, type SerializedWorld } from '@titane/core';
+import { serializeWorld, deserializeWorld, createWorld, type SerializedWorld } from '@titane/core';
 import { useTitane } from './useTitane';
 
 export const usePersistence = () => {
@@ -38,5 +38,56 @@ export const usePersistence = () => {
         syncWorld();
     };
 
-    return { saveToDisk, loadFromDisk };
+    /**
+     * Serializes the current world and saves it to local storage.
+     */
+    const autoSaveToStorage = () => {
+        if (!engine.value) return;
+        try {
+            const data = serializeWorld(engine.value.world);
+            localStorage.setItem('titane_autosave_buffer', JSON.stringify(data));
+        } catch (error) {
+            console.error('[Titane] Failed to auto-save to local storage.', error);
+        }
+    };
+
+    /**
+     * Tries to restore the world from local storage.
+     * Returns true if successfully restored, false otherwise.
+     */
+    const loadFromStorage = (): boolean => {
+        if (!engine.value) return false;
+
+        const stored = localStorage.getItem('titane_autosave_buffer');
+        if (!stored) return false;
+
+        try {
+            const data = JSON.parse(stored) as SerializedWorld;
+            engine.value.world = deserializeWorld(data);
+            syncWorld();
+            console.log('[Titane] Session recovered from local storage.');
+            return true;
+        } catch (error) {
+            console.error('[Titane] Failed to recover session. Corrupted data.', error);
+            clearStorage();
+            engine.value.world = createWorld();
+            syncWorld();
+            return false;
+        }
+    };
+
+    /**
+     * Removes the auto-save backup from local storage.
+     */
+    const clearStorage = () => {
+        localStorage.removeItem('titane_autosave_buffer');
+    };
+
+    return { 
+        saveToDisk, 
+        loadFromDisk,
+        autoSaveToStorage,
+        loadFromStorage,
+        clearStorage
+    };
 };

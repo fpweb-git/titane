@@ -10,11 +10,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onBeforeUnmount } from 'vue';
+import { ref, watch, onMounted, onBeforeUnmount } from 'vue';
 import { EntityFactory, addComponent, VELOCITY_ID, createVelocity } from '@titane/core';
 
 const canvasReference = ref<HTMLCanvasElement | null>(null);
-const { initEngine } = useTitane();
+const { initEngine, entities } = useTitane();
+
+let autoSaveInterval: number;
+let unwatch: () => void;
 
 /**
  * Forwards the resize command to the shared engine instance.
@@ -28,19 +31,35 @@ onMounted(() => {
     if (!canvasReference.value) return;
 
     const engine = initEngine(canvasReference.value);
+    const { autoSaveToStorage, loadFromStorage } = usePersistence();
 
-    // 2. Spawn a test cube (only if world is empty for demo)
-    if (engine.world.entities.active.size === 0) {
+    // 1. Attempt to recover previous session
+    const hasRecovered = loadFromStorage();
+
+    // 2. Spawn a test cube (only if world is empty for demo and no session recovered)
+    if (!hasRecovered && engine.world.entities.active.size === 0) {
         const demoCube = EntityFactory.createBox(engine.world, '#4ade80', { x: 0, y: 0, z: 0 });
         addComponent(engine.world, demoCube, VELOCITY_ID, createVelocity(0.4, 0, 0));
     }
 
-    // 3. Start simulation and listen for resize
+    // 3. Set up event-driven auto-save on entity mutations
+    unwatch = watch(entities, () => {
+        autoSaveToStorage();
+    }, { deep: true });
+
+    // 4. Set up periodic auto-save
+    autoSaveInterval = window.setInterval(() => {
+        autoSaveToStorage();
+    }, 60000);
+
+    // 5. Start simulation and listen for resize
     window.addEventListener('resize', onResize);
     engine.start();
 });
 
 onBeforeUnmount(() => {
+    if (unwatch) unwatch();
+    window.clearInterval(autoSaveInterval);
     window.removeEventListener('resize', onResize);
 });
 </script>

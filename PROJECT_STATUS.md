@@ -43,17 +43,20 @@ A data-oriented, ECS-based 3D game engine.
 - [x] **Scene State Snapshots**: Deep cloning for "Reset Scene" functionality.
 - [x] **JSON Serialization**: Logic to stringify/parse the `World` state while preserving Maps and IDs.
 - [x] **File System Bridge**: Adding "Save" and "Open" buttons in the Editor TopBar.
+- [x] **Auto-Save System**: Implementation of a "Recovery Buffer" in LocalStorage.
 
 ## ⏳ In Progress
+- [ ] **Scene Persistence**: Finalizing `.titane` JSON structure.
 - [ ] **Input System**: Capturing Keyboard/Mouse events to be stored in the ECS for system consumption.
 - [ ] **API Protection**: Final pass to ensure no direct `any` or illegal internal access remains.
 
 ## 📋 Next Tasks
 
 ### 1️⃣ Phase: Persistence (High Priority)
-1. **JSON Export/Import**: Create `serializeWorld` and `deserializeWorld` utilities.
-2. **File System Integration**: Add "Save Project" to download a `.json` file and "Load Project" to restore it.
-3. **Asset Metadata**: Basic structure to track external assets (textures/models) in the JSON schema.
+1. **Auto-Save**: Timer-based background save to `IndexedDB` or `LocalStorage`.
+2. **Project Recovery**: On engine start, check if a recovery session exists and offer to load it.
+3. **File System Access API**: Implement native "Save" (CTRL+S) that overwrites the actual file on your disk (without re-downloading).
+4. **Project Metadata**: Structure for tracking asset dependencies (the "Meta" logic).
 
 ### 2️⃣ Phase: Interaction (Medium Priority)
 1. **Input Driver**: Map browser events to an `Input` component or global state in the ECS.
