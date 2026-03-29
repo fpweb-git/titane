@@ -9,18 +9,3 @@
         </template>
     </UHeader>
 </template>
-
-<script setup lang="ts">
-import type { NavigationMenuItem } from '@nuxt/ui'
-
-const route = useRoute()
-
-const items = computed<NavigationMenuItem[]>(() => [
-    {
-        label: 'Docs',
-        to: '/docs/getting-started',
-        active: route.path.startsWith('/docs/getting-started')
-    }
-])
-
-</script>

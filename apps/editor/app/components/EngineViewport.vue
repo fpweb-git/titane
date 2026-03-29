@@ -31,7 +31,7 @@ onMounted(() => {
     if (!canvasReference.value) return;
 
     const engine = initEngine(canvasReference.value);
-    const { autoSaveToStorage, loadFromStorage } = usePersistence();
+    const { saveToStorage, loadFromStorage } = usePersistence();
 
     // 1. Attempt to recover previous session
     const hasRecovered = loadFromStorage();
@@ -45,12 +45,12 @@ onMounted(() => {
 
     // 3. Set up event-driven auto-save on entity mutations
     unwatch = watch(entities, () => {
-        autoSaveToStorage();
+        saveToStorage();
     }, { deep: true });
 
     // 4. Set up periodic auto-save
     autoSaveInterval = window.setInterval(() => {
-        autoSaveToStorage();
+        saveToStorage();
     }, 60000);
 
     // 5. Start simulation and listen for resize

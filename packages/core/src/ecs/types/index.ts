@@ -1,3 +1,4 @@
+import type { World } from '../kernel/world';
 /**
  * An Entity is a unique numeric identifier.
  * It serves as a key to associate different components together.
@@ -21,4 +22,4 @@ export type ComponentData = Record<string, unknown>;
  * @param world The current world state.
  * @param deltaTime The time elapsed since the last frame in seconds.
  */
-export type System = (world: any, deltaTime: number) => void;
+export type System = (world: World, deltaTime: number) => void;

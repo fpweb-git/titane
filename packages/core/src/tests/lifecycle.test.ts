@@ -50,7 +50,7 @@ describe('Engine Lifecycle & State Management', () => {
         expect(engine.world.entities.active.has(engine.globalInputEntity)).toBe(true);
     });
 
-    it('should capture and restore snapshots without changing the World reference', () => {
+    it('should capture and restore snapshots by allocating a new World reference', () => {
         // 1. Setup initial state
         const entity = createEntity(engine.world);
         addComponent(engine.world, entity, NAME_ID, { value: 'Original' } as Name);
@@ -68,8 +68,8 @@ describe('Engine Lifecycle & State Management', () => {
         engine.restoreSnapshot();
 
         // ASSERTIONS
-        // Reference must be strictly the same for UI reactivity
-        expect(engine.world).toBe(originalWorldReference);
+        // Reference must be a completely new clone to avoid mutating the snapshot
+        expect(engine.world).not.toBe(originalWorldReference);
 
         // Data must be restored to original values
         const restoredName = getComponent<Name>(engine.world, entity, NAME_ID);

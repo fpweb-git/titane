@@ -41,7 +41,7 @@ export const usePersistence = () => {
     /**
      * Serializes the current world and saves it to local storage.
      */
-    const autoSaveToStorage = () => {
+    const saveToStorage = () => {
         if (!engine.value) return;
         try {
             const data = serializeWorld(engine.value.world);
@@ -86,7 +86,7 @@ export const usePersistence = () => {
     return { 
         saveToDisk, 
         loadFromDisk,
-        autoSaveToStorage,
+        saveToStorage,
         loadFromStorage,
         clearStorage
     };
