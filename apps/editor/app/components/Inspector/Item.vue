@@ -7,33 +7,48 @@
             trailing-icon="i-lucide-chevron-down"
             size="sm"
             block />
+
         <template #content>
             <div class="space-y-2 py-2">
-                <UiFormLabel label="Position" />
-                <div class="grid grid-cols-3 gap-2">
-                    <UInput v-model.number="transform.position.x" @change="markUpdate" size="xs" type="number" step="0.1"
-                        color="primary">
-                        <template #leading>
-                            <UiInputLeading label="x" />
-                        </template>
-                    </UInput>
-                    <UInput v-model.number="transform.position.y" @change="markUpdate" size="xs" type="number" step="0.1" color="primary">
-                        <template #leading>
-                            <UiInputLeading label="y" />
-                        </template>
-                    </UInput>
-                    <UInput v-model.number="transform.position.z" @change="markUpdate" size="xs" type="number" step="0.1" color="primary">
-                        <template #leading>
-                            <UiInputLeading label="z" />
-                        </template>
-                    </UInput>
+                <div class="space-y-2">
+                    <UiFormLabel label="Position" />
+                    <div class="grid grid-cols-3 gap-2">
+                        <UInput v-for="axis in axes" :key="'pos-' + axis"
+                            v-model.number="transform.position[axis]"
+                            type="number" step="0.1" size="xs" color="primary"
+                            @update:model-value="markDirty"
+                            @change="saveChanges">
+                            <template #leading>
+                                <UiInputLeading :label="axis" />
+                            </template>
+                        </UInput>
+                    </div>
                 </div>
 
-                <UiFormLabel label="Scale" />
-                <div class="grid grid-cols-3 gap-2">
-                    <UInput v-model.number="transform.scale.x" @change="markUpdate" size="xs" type="number" step="0.1" />
-                    <UInput v-model.number="transform.scale.y" @change="markUpdate" size="xs" type="number" step="0.1" />
-                    <UInput v-model.number="transform.scale.z" @change="markUpdate" size="xs" type="number" step="0.1" />
+                <div class="space-y-2">
+                    <UiFormLabel label="Rotation" />
+                    <div class="grid grid-cols-3 gap-2">
+                        <UInput v-for="axis in axes" :key="'rot-' + axis" v-model.number="transform.rotation[axis]"
+                            type="number"
+                            step="0.01" size="xs" color="primary" @update:model-value="markDirty" @change="saveChanges">
+                            <template #leading>
+                                <UiInputLeading :label="axis" />
+                            </template>
+                        </UInput>
+                    </div>
+                </div>
+
+                <div class="space-y-2">
+                    <UiFormLabel label="Scale" />
+                    <div class="grid grid-cols-3 gap-2">
+                        <UInput v-for="axis in axes" :key="'scale-' + axis" v-model.number="transform.scale[axis]"
+                            type="number"
+                            step="0.1" size="xs" color="primary" @update:model-value="markDirty" @change="saveChanges">
+                            <template #leading>
+                                <UiInputLeading :label="axis" />
+                            </template>
+                        </UInput>
+                    </div>
                 </div>
             </div>
         </template>
@@ -49,7 +64,17 @@ const props = defineProps<{
 
 const { saveToStorage } = usePersistence();
 
-const markUpdate = () => {
+const axes = ['x', 'y', 'z'] as const;
+
+/**
+ * Notifies the Engine that the data has changed.
+ * This triggers the HierarchySystem to recompute the World Matrix.
+ */
+const markDirty = () => {
+    props.transform.isDirty = true;
+};
+
+const saveChanges = () => {
     saveToStorage();
 };
 </script>

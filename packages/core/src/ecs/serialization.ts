@@ -49,6 +49,15 @@ export const deserializeWorld = (data: SerializedWorld): World => {
         for (const [entityStringId, componentData] of Object.entries(storeData)) {
             // Important: JSON keys are always strings, we must cast back to Entity (number)
             const entityId = Number(entityStringId);
+            
+            // Fix Transform Float32Array loss during JSON serialization
+            if (componentId === 'transform') {
+                const t = componentData as any;
+                t.worldMatrix = new Float32Array(16);
+                t.worldMatrix[0] = 1; t.worldMatrix[5] = 1; t.worldMatrix[10] = 1; t.worldMatrix[15] = 1;
+                t.isDirty = true; 
+            }
+
             addComponent(world, entityId, componentId, componentData);
         }
     }

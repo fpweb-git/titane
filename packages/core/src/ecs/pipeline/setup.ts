@@ -3,6 +3,7 @@ import { registerSystem } from './scheduler';
 import { Phase } from './system';
 import { movementSystem } from '../systems/movement';
 import { clearInputSystem } from '../systems/input-system';
+import { transformSystem } from '../systems/transform';
 
 /**
  * Configures the default execution pipeline for the Titane Engine.
@@ -23,6 +24,10 @@ export const setupDefaultPipeline = (engine: TitaneEngine): void => {
         if (!engine.isPaused) {
             clearInputSystem(world);
         }
+        
+        // Transform Hierarchy must always run, even when paused,
+        // so that Editor updates are correctly computed into world matrices.
+        transformSystem(world);
     });
 
     // Rendering Phase (Always runs to keep the editor responsive)

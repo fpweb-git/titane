@@ -1,4 +1,5 @@
-import { ComponentId } from '../types';
+import { ComponentId, Entity } from '../types';
+import { mat4Create } from '../../utils/math';
 
 /**
  * Unique identifier for the Transform component.
@@ -12,6 +13,9 @@ export interface Transform {
     position: { x: number; y: number; z: number };
     rotation: { x: number; y: number; z: number };
     scale: { x: number; y: number; z: number };
+    parent: Entity | null;
+    worldMatrix: Float32Array;
+    isDirty: boolean;
 }
 
 /**
@@ -28,5 +32,8 @@ export const createTransform = (
 ): Transform => ({
     position: { ...position },
     rotation: { ...rotation },
-    scale: { ...scale }
+    scale: { ...scale },
+    parent: null,
+    worldMatrix: mat4Create(),
+    isDirty: true
 });

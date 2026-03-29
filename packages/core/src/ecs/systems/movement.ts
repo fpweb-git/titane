@@ -49,9 +49,12 @@ export const movementSystem = (world: World, deltaTime: number): void => {
             velocity.x = (right - left) * speed;
         }
 
-        // 4. Apply velocity to position (Universal: Works for demo cubes and players)
-        transform.position.x += velocity.x * deltaTime;
-        transform.position.y += velocity.y * deltaTime;
-        transform.position.z += velocity.z * deltaTime;
+        // 4. Apply velocity to position if there is movement
+        if (velocity.x !== 0 || velocity.y !== 0 || velocity.z !== 0) {
+            transform.position.x += velocity.x * deltaTime;
+            transform.position.y += velocity.y * deltaTime;
+            transform.position.z += velocity.z * deltaTime;
+            transform.isDirty = true;
+        }
     }
 };

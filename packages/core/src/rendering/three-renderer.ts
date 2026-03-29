@@ -95,15 +95,14 @@ export class ThreeRenderer implements IRenderer {
                 const geometry = new THREE.BoxGeometry(1, 1, 1);
                 const material = new THREE.MeshStandardMaterial({ color: meshData.color });
                 const mesh = new THREE.Mesh(geometry, material);
+                mesh.matrixAutoUpdate = false;
                 this.scene.add(mesh);
                 this.entityObjectMap.set(entityId, mesh);
             }
 
-            // Sync transformations
+            // Sync transformations exclusively using the DOD calculated World Matrix
             const mesh = this.entityObjectMap.get(entityId)!;
-            mesh.position.set(transform.position.x, transform.position.y, transform.position.z);
-            mesh.rotation.set(transform.rotation.x, transform.rotation.y, transform.rotation.z);
-            mesh.scale.set(transform.scale.x, transform.scale.y, transform.scale.z);
+            mesh.matrix.fromArray(transform.worldMatrix);
         }
 
         // 3. FINAL DRAW
