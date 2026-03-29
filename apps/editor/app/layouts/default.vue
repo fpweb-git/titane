@@ -1,29 +1,29 @@
 <template>
-    <UDashboardGroup>
-        <UDashboardSidebar collapsible resizable>
-            <template #header>
-                <h2 class="text-sm font-bold flex items-center gap-2">
-                    <UIcon name="i-lucide-file-stack" />
-                    Titane
-                </h2>
-            </template>
-            <SidebarHierarchy />
-        </UDashboardSidebar>
+    <main class="flex flex-col h-screen">
+        <TopbarMain />
+        <!-- Editor Layout -->
+        <div class="flex justify-between w-full h-full">
+            <!-- Hierarchy Sidebar -->
+            <USidebar side="left" :rail="true" :ui="{ body: 'p-0' }">
+                <SidebarHierarchy />
+            </USidebar>
 
-        <div class="flex flex-col">
-            <Topbar />
-            <slot />
+            <!-- Canvas -->
+            <div class="flex flex-col w-full h-full">
+                <TopbarCanvas />
+                <slot />
+            </div>
+            <!-- Inspector Sidebar -->
+            <USidebar side="right" :rail="true">
+                <template #header class="min-h-2 py-0">
+                    <h2 class="text-xs text-muted">
+                        Inspector
+                    </h2>
+                </template>
+                <Inspector />
+            </USidebar>
         </div>
-        <UDashboardSidebar side="right" collapsible resizable class="border-l border-default">
-            <template #header>
-                <h2 class="text-sm">
-                    Inspector
-                </h2>
-            </template>
-            <USeparator />
-            <Inspector />
-        </UDashboardSidebar>
-    </UDashboardGroup>
+    </main>
 </template>
 
 <script setup lang="ts">

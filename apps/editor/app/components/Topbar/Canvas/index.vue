@@ -1,21 +1,20 @@
 <template>
-    <UDashboardNavbar>
+    <UHeader title="" class="h-10">
         <template #right>
             <UButton
                 :icon="isPlaying ? 'i-lucide-pause' : 'i-lucide-play'"
                 color="neutral"
-                variant="ghost"
-                size="sm"
+                variant="link"
+                size="xs"
                 @click="togglePlay" />
             <UButton
                 :icon="isGridVisible ? 'i-lucide-grid-2x2-x' : 'i-lucide-grid-2x2'"
                 color="neutral"
-                variant="ghost"
-                size="sm"
+                variant="link"
+                size="xs"
                 @click="toggleGrid" />
-            <TopbarMenu />
         </template>
-    </UDashboardNavbar>
+    </UHeader>
 </template>
 
 <script setup lang="ts">

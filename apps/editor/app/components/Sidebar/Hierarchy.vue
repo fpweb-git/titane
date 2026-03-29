@@ -17,6 +17,9 @@
                 size="sm"
                 @click.stop="createNewEntity" />
         </template>
+        <template #actions-leading>
+            <UIcon name="i-lucide-box" class="w-[14px] h-[14px]" />
+        </template>
         <template #actions-trailing>
             <UiEntityActions />
         </template>
@@ -50,9 +53,10 @@ const items = computed<NavigationMenuItem[]>(() => {
 
     return [
         {
-            label: 'World',
+            label: 'Hierarchy',
             defaultOpen: true,
             slot: 'add' as const,
+            class: 'text-xs',
             children: Array.from(entities.value).map((id) => {
                 const componentName = getComponent<Name>(world, id, NAME_ID);
                 const displayName = componentName?.value || `GameObject #${id}`;
@@ -61,6 +65,7 @@ const items = computed<NavigationMenuItem[]>(() => {
                     label: displayName,
                     icon: 'i-lucide-box',
                     slot: 'actions' as const,
+                    class: 'text-xs',
                     active: selectedEntityId.value === id,
                     onSelect: () => selectEntity(id)
                 };

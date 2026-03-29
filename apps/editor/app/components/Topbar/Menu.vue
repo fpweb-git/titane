@@ -1,6 +1,6 @@
 <template>
-    <UDropdownMenu :items="dropDownItems" size="sm">
-        <UButton icon="i-lucide-menu" color="neutral" variant="outline" size="sm" />
+    <UDropdownMenu :items="dropDownItems" size="xs">
+        <UButton icon="i-lucide-menu" color="neutral" variant="outline" size="xs" />
     </UDropdownMenu>
     <!-- Hidden file input for loading projects -->
     <input
@@ -39,11 +39,6 @@ const dropDownItems = ref<DropdownMenuItem[][]>([
         icon: 'i-lucide-save',
         shortcuts: ['⌘', 'S'],
         onSelect: () => saveToDisk('my-project.titane')
-    }],
-    [{
-        label: 'Export as JSON',
-        icon: 'i-lucide-download',
-        onSelect: () => saveToDisk('scene-export.json')
     }]
 ])
 
