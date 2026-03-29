@@ -5,6 +5,12 @@ import { IRenderer } from './renderer-interface';
 import { Scheduler, createScheduler, registerSystem, runScheduler } from '../ecs/scheduler';
 import { Phase } from '../ecs/system';
 import { cloneWorld } from '../ecs/world-utils';
+import { createEntity } from '../ecs/entity';
+import { addComponent } from '../ecs/component';
+import { INPUT_ID, createDefaultInput } from '../ecs/components/input';
+import { InputDriver } from './input-driver';
+import { clearInputSystem } from '../ecs/systems/input-system';
+import { Entity } from '../ecs/types';
 
 /**
  * The high-level runner for the Titane Engine.
@@ -22,6 +28,10 @@ export class TitaneEngine {
     private renderer: IRenderer;
     private clock: Clock;
     private isRunning: boolean = false;
+    private inputDriver: InputDriver;
+    
+    /** Public access to the singleton entity ID hosting tracking inputs */
+    public globalInputEntity: Entity;
 
     /**
      * @param renderer - The renderer implementation (driver) to use.
@@ -35,10 +45,17 @@ export class TitaneEngine {
         // 1. Initialize the renderer driver
         this.renderer.init(canvasElement);
 
-        // 2. Setup the functional scheduler pipeline
+        // 2. Spawn the Core Global Input Entity dynamically
+        this.globalInputEntity = createEntity(this.world);
+        addComponent(this.world, this.globalInputEntity, INPUT_ID, createDefaultInput());
+
+        // 3. Mount the Input Driver logic matching standard Editor Window APIs
+        this.inputDriver = new InputDriver(this.world, this.globalInputEntity, canvasElement);
+
+        // 4. Setup the functional scheduler pipeline
         this.scheduler = createScheduler();
 
-        // 3. Register core systems into their respective phases
+        // 5. Register core systems into their respective phases
         this.setupSystems();
     }
 
@@ -50,6 +67,13 @@ export class TitaneEngine {
         registerSystem(this.scheduler, Phase.PHYSICS, (world, deltaTime) => {
             if (!this.isPaused) {
                 movementSystem(world, deltaTime);
+            }
+        });
+
+        // Frame Cleanup: Wipe inputs down that last one frame exactly
+        registerSystem(this.scheduler, Phase.POST_PHYSICS, (world) => {
+            if (!this.isPaused) {
+                clearInputSystem(world);
             }
         });
 
@@ -74,6 +98,14 @@ export class TitaneEngine {
      */
     public stop(): void {
         this.isRunning = false;
+    }
+
+    /**
+     * Completely strip browser hook allocations allowing for clean editor garbage cleanup
+     */
+    public dispose(): void {
+        this.stop();
+        this.inputDriver.dispose();
     }
 
     /**

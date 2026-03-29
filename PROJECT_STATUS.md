@@ -18,7 +18,7 @@ A data-oriented, ECS-based 3D game engine.
 4. **Public API** must be used for all modifications (Internal Maps are private).
 
 ## 🎯 Current Milestone
-**Editor Workspace Foundations & Runtime Control**
+**Interaction Systems & Transform Hierarchy**
 
 ## ✅ Completed
 - [x] **Renderer Decoupling**: Injected `IRenderer` into `TitaneEngine`, replacing hardcoded `ThreeRenderer`.
@@ -44,25 +44,23 @@ A data-oriented, ECS-based 3D game engine.
 - [x] **JSON Serialization**: Logic to stringify/parse the `World` state while preserving Maps and IDs.
 - [x] **File System Bridge**: Adding "Save" and "Open" buttons in the Editor TopBar.
 - [x] **Auto-Save System**: Implementation of a "Recovery Buffer" in LocalStorage.
+- [x] **Input System**: Capturing Keyboard/Mouse events into the ECS for system consumption (+ Vitest Coverage).
 
 ## ⏳ In Progress
-- [ ] **Scene Persistence**: Finalizing `.titane` JSON structure.
-- [ ] **Input System**: Capturing Keyboard/Mouse events to be stored in the ECS for system consumption.
-- [ ] **API Protection**: Final pass to ensure no direct `any` or illegal internal access remains.
+- [ ] **Transform Refactor**: Implementing `LocalTransform` vs `WorldTransform` to support **Parenting** (Entity-Entity hierarchy).
+- [ ] **Scene Persistence**: Finalizing the `.titane` file schema (versioning and metadata).
 
 ## 📋 Next Tasks
 
-### 1️⃣ Phase: Persistence (High Priority)
-1. **Auto-Save**: Timer-based background save to `IndexedDB` or `LocalStorage`.
-2. **Project Recovery**: On engine start, check if a recovery session exists and offer to load it.
-3. **File System Access API**: Implement native "Save" (CTRL+S) that overwrites the actual file on your disk (without re-downloading).
-4. **Project Metadata**: Structure for tracking asset dependencies (the "Meta" logic).
+### 1️⃣ Phase: Interaction & Logic (High Priority)
+1. **Input Driver**: Map browser events (`keydown`, `mousedown`) to a global `Input` state in the ECS.
+2. **Parenting Logic**: Update the `TransformSystem` to calculate global matrices based on parent-child relationships.
+3. **Manual Reset UI**: Add a dedicated "Reset Scene" button to revert to the initial snapshot without reloading the page.
 
-### 2️⃣ Phase: Interaction (Medium Priority)
-1. **Input Driver**: Map browser events to an `Input` component or global state in the ECS.
-2. **Transform Refactor**: Separation of `LocalTransform` and `WorldTransform` to support parenting logic.
-3. **Manual Reset**: Add a dedicated "Reset Scene" button in the UI to revert to the last snapshot without toggling Play.
+### 2️⃣ Phase: Visual Tooling (Medium Priority)
+1. **Viewport Raycasting**: Entity selection by clicking directly on 3D meshes (using Three.js Raycaster).
+2. **Transformation Gizmos**: On-screen handles (Translation/Rotation/Scale) for the selected entity.
+3. **Asset Metadata**: Structure for tracking external dependencies (textures, glTF models).
 
-### 3️⃣ Phase: Visual Tooling (Long Term)
-1. **Transformation Gizmos**: On-screen handles for Translate, Rotate, and Scale.
-2. **Viewport Raycasting**: Entity selection by clicking directly on 3D meshes.
+### 3️⃣ Phase: Native Integration (Deprioritized)
+1. **File System Access API**: Native "Save" (CTRL+S) to overwrite files on disk without re-downloading.

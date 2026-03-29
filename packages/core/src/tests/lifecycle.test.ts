@@ -18,7 +18,11 @@ describe('Engine Lifecycle', () => {
             setGridVisible: vi.fn(),
         } as unknown as IRenderer;
 
-        canvas = {} as HTMLCanvasElement; // Mock canvas
+        canvas = {
+            addEventListener: vi.fn(),
+            removeEventListener: vi.fn(),
+            getBoundingClientRect: vi.fn(() => ({ width: 800, height: 600, left: 0, top: 0 }))
+        } as unknown as HTMLCanvasElement; // Mock canvas
         engine = new TitaneEngine(mockRenderer, canvas);
     });
 
