@@ -10,7 +10,6 @@
 
 <script setup lang="ts">
 import type { DropdownMenuItem } from '@nuxt/ui'
-import { useInspectorActions } from '~/composables/inspector/useInspectorActions';
 
 const { deleteSelectedEntity, duplicateSelectedEntity } = useInspectorActions();
 

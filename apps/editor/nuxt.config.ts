@@ -8,6 +8,11 @@ export default defineNuxtConfig({
   build: {
     transpile: ['@titane/core', 'three']
   },
+  imports: {
+    dirs: [
+      'composables/**',
+    ]
+  },
   typescript: {
     shim: false,
     strict: true

@@ -1,12 +1,12 @@
 <template>
     <UNavigationMenu
         orientation="vertical"
-        :items="items"
+        :items="hierarchyItems"
         class="data-[orientation=vertical]:w-full"
         :collapsed="false">
         <template #add-trailing>
             <UBadge
-                :label="entities.size"
+                :label="count"
                 color="neutral"
                 variant="outline"
                 size="sm" />
@@ -28,9 +28,10 @@
 
 <script setup lang="ts">
 import type { NavigationMenuItem } from '@nuxt/ui'
-import { EntityFactory, getComponent, NAME_ID, type Name } from '@titane/core';
+import { EntityFactory } from '@titane/core';
 
-const { engine, entities, syncWorld, selectedEntityId } = useTitane();
+const { engine, syncWorld } = useTitane();
+const { items, count } = useHierarchy();
 
 const createNewEntity = (): void => {
     if (!engine.value) return;
@@ -39,38 +40,12 @@ const createNewEntity = (): void => {
     syncWorld();
 };
 
-const selectEntity = (entityId: number) => {
-    selectedEntityId.value = entityId;
-};
-
-/**
-* Transforms the ECS World state into Nuxt UI Navigation items.
-* Fetches the 'Name' component for each entity to provide a clear label.
-*/
-const items = computed<NavigationMenuItem[]>(() => {
-    if (!engine.value) return [];
-    const world = engine.value.world;
-
-    return [
-        {
-            label: 'Hierarchy',
-            defaultOpen: true,
-            slot: 'add' as const,
-            class: 'text-xs',
-            children: Array.from(entities.value).map((id) => {
-                const componentName = getComponent<Name>(world, id, NAME_ID);
-                const displayName = componentName?.value || `GameObject #${id}`;
-
-                return {
-                    label: displayName,
-                    icon: 'i-lucide-box',
-                    slot: 'actions' as const,
-                    class: 'text-xs',
-                    active: selectedEntityId.value === id,
-                    onSelect: () => selectEntity(id)
-                };
-            })
-        }
-    ];
-});
+const hierarchyItems = computed<NavigationMenuItem[]>(() => [
+    {
+        label: 'Hierarchy',
+        defaultOpen: true,
+        slot: 'add',
+        children: items.value
+    }
+]);
 </script>
