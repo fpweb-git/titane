@@ -1,9 +1,9 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { createWorld, World } from '../../ecs/world';
-import { createEntity } from '../../ecs/entity';
-import { addComponent, getComponent } from '../../ecs/component';
-import { createScheduler, registerSystem, runScheduler } from '../../ecs/scheduler';
-import { Phase } from '../../ecs/system';
+import { createWorld, World } from '../../ecs/kernel/world';
+import { createEntity } from '../../ecs/kernel/entity';
+import { addComponent, getComponent } from '../../ecs/kernel/component';
+import { createScheduler, registerSystem, runScheduler } from '../../ecs/pipeline/scheduler';
+import { Phase } from '../../ecs/pipeline/system';
 
 describe('ECS: System Execution', () => {
     let world: World;
@@ -37,7 +37,7 @@ describe('ECS: System Execution', () => {
     it('should pass correct deltaTime and world to systems', () => {
         const scheduler = createScheduler();
         const systemA = vi.fn();
-        
+
         registerSystem(scheduler, Phase.UPDATE, systemA);
 
         const dt = 0.016;

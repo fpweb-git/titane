@@ -1,4 +1,4 @@
-import { World } from '../ecs/world';
+import { World } from '../ecs/kernel/world';
 
 /**
  * Interface defining the contract for any Renderer Driver.

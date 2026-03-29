@@ -1,16 +1,15 @@
-import { World, createWorld } from '../ecs/world';
-import { movementSystem } from '../ecs/systems/movement';
+import { World, createWorld } from '../ecs/kernel/world';
 import { Clock } from '../utils/clock';
 import { IRenderer } from './renderer-interface';
-import { Scheduler, createScheduler, registerSystem, runScheduler } from '../ecs/scheduler';
-import { Phase } from '../ecs/system';
-import { cloneWorld } from '../ecs/world-utils';
-import { createEntity } from '../ecs/entity';
-import { addComponent } from '../ecs/component';
+import { Scheduler, createScheduler, runScheduler } from '../ecs/pipeline/scheduler';
+import { createEntity } from '../ecs/kernel/entity';
+import { addComponent } from '../ecs/kernel/component';
 import { INPUT_ID, createDefaultInput } from '../ecs/components/input';
 import { InputDriver } from './input-driver';
-import { clearInputSystem } from '../ecs/systems/input-system';
 import { Entity } from '../ecs/types';
+import { setupDefaultPipeline } from '../ecs/pipeline/setup';
+import { captureWorldState } from '../ecs/kernel/state-manager';
+import { NAME_ID } from '../ecs/components/name';
 
 /**
  * The high-level runner for the Titane Engine.
@@ -24,12 +23,12 @@ export class TitaneEngine {
     public isPaused: boolean = true;
 
     private snapshot: World | null = null;
-    private scheduler: Scheduler;
-    private renderer: IRenderer;
+    public scheduler: Scheduler;
+    public renderer: IRenderer;
     private clock: Clock;
     private isRunning: boolean = false;
     private inputDriver: InputDriver;
-    
+
     /** Public access to the singleton entity ID hosting tracking inputs */
     public globalInputEntity: Entity;
 
@@ -48,6 +47,8 @@ export class TitaneEngine {
         // 2. Spawn the Core Global Input Entity dynamically
         this.globalInputEntity = createEntity(this.world);
         addComponent(this.world, this.globalInputEntity, INPUT_ID, createDefaultInput());
+        // Ajoute ceci pour que l'éditeur l'affiche correctement :
+        addComponent(this.world, this.globalInputEntity, NAME_ID, { value: 'System (Global Input)' })
 
         // 3. Mount the Input Driver logic matching standard Editor Window APIs
         this.inputDriver = new InputDriver(this.world, this.globalInputEntity, canvasElement);
@@ -55,32 +56,8 @@ export class TitaneEngine {
         // 4. Setup the functional scheduler pipeline
         this.scheduler = createScheduler();
 
-        // 5. Register core systems into their respective phases
-        this.setupSystems();
-    }
-
-    /**
-     * Internal setup to link systems to the scheduler phases.
-     */
-    private setupSystems(): void {
-        // Gameplay / Physics Phase
-        registerSystem(this.scheduler, Phase.PHYSICS, (world, deltaTime) => {
-            if (!this.isPaused) {
-                movementSystem(world, deltaTime);
-            }
-        });
-
-        // Frame Cleanup: Wipe inputs down that last one frame exactly
-        registerSystem(this.scheduler, Phase.POST_PHYSICS, (world) => {
-            if (!this.isPaused) {
-                clearInputSystem(world);
-            }
-        });
-
-        // Rendering Phase (Always runs to keep the editor responsive)
-        registerSystem(this.scheduler, Phase.RENDER, (world) => {
-            this.renderer.render(world);
-        });
+        // 5. Build the deterministic engine pipeline functionally
+        setupDefaultPipeline(this);
     }
 
     /**
@@ -112,7 +89,7 @@ export class TitaneEngine {
      * Captures the current state of the world.
      */
     public saveSnapshot(): void {
-        this.snapshot = cloneWorld(this.world);
+        this.snapshot = captureWorldState(this.world);
         console.log('Snapshot saved');
     }
 
@@ -125,23 +102,8 @@ export class TitaneEngine {
             return;
         }
         // Replace the current world with the snapshot clone
-        this.world = cloneWorld(this.snapshot);
+        this.world = captureWorldState(this.snapshot);
         console.log('World restored from snapshot');
-    }
-
-    /**
-     * Triggers the renderer resize logic.
-     */
-    public handleResize(): void {
-        this.renderer.handleResize();
-    }
-
-    /**
-     * Toggles the visibility of the editor grid helper.
-     * @param visible - Whether the grid should be shown.
-     */
-    public setGridVisible(visible: boolean): void {
-        this.renderer.setGridVisible(visible);
     }
 
     /**

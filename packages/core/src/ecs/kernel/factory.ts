@@ -1,10 +1,10 @@
 import { World } from './world';
-import { Entity } from './types';
+import { Entity } from '../types';
 import { createEntity } from './entity';
 import { addComponent } from './component';
-import { TRANSFORM_ID, createTransform } from './components/transform';
-import { MESH_ID, createMesh } from './components/mesh';
-import { NAME_ID, createName } from './components/name';
+import { TRANSFORM_ID, createTransform } from '../components/transform';
+import { MESH_ID, createMesh } from '../components/mesh';
+import { NAME_ID, createName } from '../components/name';
 
 /**
  * Helper functions to quickly spawn common entities.

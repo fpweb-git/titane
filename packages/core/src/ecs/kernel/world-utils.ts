@@ -1,5 +1,5 @@
 import { World } from './world';
-import { Entity, ComponentId } from './types';
+import { Entity, ComponentId } from '../types';
 
 /**
  * Creates a deep copy of the entire ECS World.

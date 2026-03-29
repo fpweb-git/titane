@@ -1,6 +1,6 @@
-import { World } from '../world';
-import { query } from '../query';
-import { updateComponent } from '../component';
+import { World } from '../kernel/world';
+import { query } from '../kernel/query';
+import { updateComponent } from '../kernel/component';
 import { INPUT_ID, Input } from '../components/input';
 
 /**

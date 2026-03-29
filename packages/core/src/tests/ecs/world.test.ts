@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { createWorld, World } from '../../ecs/world';
-import { createEntity, destroyEntity } from '../../ecs/entity';
+import { createWorld, World } from '../../ecs/kernel/world';
+import { createEntity, destroyEntity } from '../../ecs/kernel/entity';
 
 describe('ECS: World & Entities', () => {
     let world: World;

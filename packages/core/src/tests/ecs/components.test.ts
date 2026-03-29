@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { createWorld, World } from '../../ecs/world';
-import { createEntity } from '../../ecs/entity';
-import { addComponent, getComponent, hasComponent, removeComponent, updateComponent } from '../../ecs/component';
+import { createWorld, World } from '../../ecs/kernel/world';
+import { createEntity } from '../../ecs/kernel/entity';
+import { addComponent, getComponent, hasComponent, removeComponent, updateComponent } from '../../ecs/kernel/component';
 
 describe('ECS: Component Management', () => {
     let world: World;

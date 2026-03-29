@@ -1,10 +1,10 @@
 // ECS Kernel
 export * from './ecs/types';
-export * from './ecs/world';
-export * from './ecs/entity';
-export * from './ecs/component';
-export * from './ecs/query';
-export * from './ecs/factory';
+export * from './ecs/kernel/world';
+export * from './ecs/kernel/entity';
+export * from './ecs/kernel/component';
+export * from './ecs/kernel/query';
+export * from './ecs/kernel/factory';
 
 // Standard Components & Systems
 export * from './ecs/components/transform';
@@ -12,6 +12,7 @@ export * from './ecs/components/velocity';
 export * from './ecs/components/mesh';
 export * from './ecs/systems/movement';
 export * from './ecs/components/name';
+export * from './ecs/components/input';
 export * from './ecs/serialization';
 
 // Runtime Orchestrator

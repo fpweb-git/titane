@@ -1,4 +1,4 @@
-import { World } from './world';
+import { World } from '../kernel/world';
 import { System, Phase } from './system';
 
 /**

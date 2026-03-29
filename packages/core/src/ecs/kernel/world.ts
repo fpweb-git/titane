@@ -1,4 +1,4 @@
-import { Entity, ComponentId } from './types';
+import { Entity, ComponentId } from '../types';
 
 /**
  * The ECS World structure. 

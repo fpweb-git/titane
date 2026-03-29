@@ -45,6 +45,7 @@ A data-oriented, ECS-based 3D game engine.
 - [x] **File System Bridge**: Adding "Save" and "Open" buttons in the Editor TopBar.
 - [x] **Auto-Save System**: Implementation of a "Recovery Buffer" in LocalStorage.
 - [x] **Input System**: Capturing Keyboard/Mouse events into the ECS for system consumption (+ Vitest Coverage).
+- [x] **Engine Orchestration Refactor**: Decoupled execution logic and state management from TitaneEngine into purely functional modules (state-manager, setup pipeline).
 
 ## ⏳ In Progress
 - [ ] **Transform Refactor**: Implementing `LocalTransform` vs `WorldTransform` to support **Parenting** (Entity-Entity hierarchy).

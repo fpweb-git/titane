@@ -37,7 +37,7 @@ export const useRuntime = () => {
         if (!engine.value) return;
 
         isGridVisible.value = !isGridVisible.value;
-        engine.value.setGridVisible(isGridVisible.value);
+        engine.value.renderer.setGridVisible(isGridVisible.value);
     };
 
     /**

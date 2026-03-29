@@ -1,5 +1,5 @@
 import { World } from './world';
-import { Entity, ComponentId } from './types';
+import { Entity, ComponentId } from '../types';
 
 /**
  * Filters the world for all entities that possess the full set of required components.

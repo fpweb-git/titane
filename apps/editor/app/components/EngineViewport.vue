@@ -24,7 +24,7 @@ let unwatch: () => void;
  */
 const onResize = () => {
     const { engine } = useTitane();
-    engine.value?.handleResize();
+    engine.value?.renderer.handleResize();
 };
 
 onMounted(() => {
@@ -36,8 +36,9 @@ onMounted(() => {
     // 1. Attempt to recover previous session
     const hasRecovered = loadFromStorage();
 
-    // 2. Spawn a test cube (only if world is empty for demo and no session recovered)
-    if (!hasRecovered && engine.world.entities.active.size === 0) {
+    // 2. Spawn a test cube (only if no session was recovered and no user entities exist)
+    // Note: active.size starts at 1 because the engine always creates a globalInputEntity (entity 0)
+    if (!hasRecovered && engine.world.entities.active.size <= 1) {
         const demoCube = EntityFactory.createBox(engine.world, '#4ade80', { x: 0, y: 0, z: 0 });
         addComponent(engine.world, demoCube, VELOCITY_ID, createVelocity(0.4, 0, 0));
     }

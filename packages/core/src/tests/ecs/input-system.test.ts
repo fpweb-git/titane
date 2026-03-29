@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { createWorld, World } from '../../ecs/world';
-import { createEntity } from '../../ecs/entity';
-import { addComponent, getComponent } from '../../ecs/component';
+import { createWorld, World } from '../../ecs/kernel/world';
+import { createEntity } from '../../ecs/kernel/entity';
+import { addComponent, getComponent } from '../../ecs/kernel/component';
 import { INPUT_ID, createDefaultInput, Input } from '../../ecs/components/input';
 import { clearInputSystem } from '../../ecs/systems/input-system';
 

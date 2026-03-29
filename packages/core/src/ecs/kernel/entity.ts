@@ -1,5 +1,5 @@
 import { World } from './world';
-import { Entity } from './types';
+import { Entity } from '../types';
 
 /**
  * Spawns a new entity in the specified world.

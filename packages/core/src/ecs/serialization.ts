@@ -1,6 +1,6 @@
-import { World, createWorld } from './world';
+import { World, createWorld } from './kernel/world';
 import { Entity, ComponentId } from './types';
-import { addComponent } from './component';
+import { addComponent } from './kernel/component';
 
 /**
  * Portable representation of the World state.

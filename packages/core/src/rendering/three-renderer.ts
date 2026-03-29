@@ -1,8 +1,8 @@
 import * as THREE from 'three';
 import { IRenderer } from '../runtime/renderer-interface';
-import { World } from '../ecs/world';
-import { query } from '../ecs/query';
-import { getComponent } from '../ecs/component';
+import { World } from '../ecs/kernel/world';
+import { query } from '../ecs/kernel/query';
+import { getComponent } from '../ecs/kernel/component';
 import { TRANSFORM_ID, Transform } from '../ecs/components/transform';
 import { MESH_ID, MeshData } from '../ecs/components/mesh';
 

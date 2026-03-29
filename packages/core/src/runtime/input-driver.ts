@@ -1,6 +1,6 @@
-import { World } from '../ecs/world';
+import { World } from '../ecs/kernel/world';
 import { Entity } from '../ecs/types';
-import { updateComponent } from '../ecs/component';
+import { updateComponent } from '../ecs/kernel/component';
 import { INPUT_ID, Input } from '../ecs/components/input';
 
 /**

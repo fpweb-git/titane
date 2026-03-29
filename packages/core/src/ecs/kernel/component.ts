@@ -1,5 +1,5 @@
 import { World } from './world';
-import { Entity, ComponentId } from './types';
+import { Entity, ComponentId } from '../types';
 
 /**
  * Associates a component data object with an entity.

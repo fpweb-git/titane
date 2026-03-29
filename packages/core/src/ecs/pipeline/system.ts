@@ -1,4 +1,4 @@
-import { World } from './world';
+import { World } from '../kernel/world';
 
 /**
  * A System is a simple function that operates on the World.
