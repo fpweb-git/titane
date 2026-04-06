@@ -46,9 +46,10 @@ A data-oriented, ECS-based 3D game engine.
 - [x] **Auto-Save System**: Implementation of a "Recovery Buffer" in LocalStorage.
 - [x] **Input System**: Capturing Keyboard/Mouse events into the ECS for system consumption (+ Vitest Coverage).
 - [x] **Engine Orchestration Refactor**: Decoupled execution logic and state management from TitaneEngine into purely functional modules (state-manager, setup pipeline).
+- [x] **Transform Refactor**: Implementing `LocalTransform` vs `WorldTransform` to support **Parenting** (Entity-Entity hierarchy).
+- [x] **Hierarchy component**: Modify the Hierarchy to support parenting (Entity-Entity hierarchy).
 
 ## ⏳ In Progress
-- [ ] **Transform Refactor**: Implementing `LocalTransform` vs `WorldTransform` to support **Parenting** (Entity-Entity hierarchy).
 - [ ] **Scene Persistence**: Finalizing the `.titane` file schema (versioning and metadata).
 
 ## 📋 Next Tasks

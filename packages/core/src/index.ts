@@ -5,6 +5,7 @@ export * from './ecs/kernel/entity';
 export * from './ecs/kernel/component';
 export * from './ecs/kernel/query';
 export * from './ecs/kernel/factory';
+export * from './ecs/kernel/transform-utils';
 
 // Standard Components & Systems
 export * from './ecs/components/transform';

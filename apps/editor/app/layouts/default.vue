@@ -5,6 +5,9 @@
         <div class="flex justify-between w-full h-full">
             <!-- Hierarchy Sidebar -->
             <USidebar side="left" :rail="true" :ui="{ body: 'p-0' }">
+                <template #header>
+                    <SidebarHierarchyHeader />
+                </template>
                 <SidebarHierarchy />
             </USidebar>
 
@@ -15,7 +18,7 @@
             </div>
             <!-- Inspector Sidebar -->
             <USidebar side="right" :rail="true">
-                <template #header class="min-h-2 py-0">
+                <template #header>
                     <h2 class="text-xs text-muted">
                         Inspector
                     </h2>
@@ -25,7 +28,3 @@
         </div>
     </main>
 </template>
-
-<script setup lang="ts">
-const { isPlaying, togglePlay } = useRuntime();
-</script>
